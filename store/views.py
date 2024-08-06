@@ -11,6 +11,7 @@ from .forms import ReviewForm
 from django.contrib import messages
 from orders.models import OrderProduct
 
+
 def store(request, category_slug=None):
     categories = None
     products = None
