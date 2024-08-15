@@ -1,0 +1,12 @@
+<form method="post" action="{% url 'initiate_payment' %}">
+    {% csrf_token %}
+    <label for="amount">Amount:</label>
+    <input type="text" id="amount" name="amount">
+    <button type="submit">Pay with Payme</button>
+</form>
+
+
+<!--	<form action="{% url 'payme_payment' order_id=order.id amount=order.total_amount %}" method="post">-->
+<!--								{% csrf_token %}-->
+<!--								<button type="submit" class="btn btn-primary">Pay with Payme</button>-->
+<!--							</form>-->

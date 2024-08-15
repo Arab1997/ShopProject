@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n)+l%k(eml^!arg%f$nn1(*@z(tj7+%v%m%hmm698c^s+)o9e)'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +44,10 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'storages',
+    'rest_framework',
+    # 'admin_honeypot',
+
+
     # 'admin_honeypot',
 ]
 
@@ -54,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django_session_timeout.middleware.SessionTimeoutMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 SESSION_EXPIRE_SECONDS = 3600  # 1 hour
@@ -152,30 +157,32 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# SMTP configuration
-# EMAIL_HOST = config('EMAIL_HOST')
-# EMAIL_PORT = config('EMAIL_PORT', cast=int)
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'maxmudovabdullo97@gmail.com'
-# EMAIL_HOST_PASSWORD = '3769197aa'
-EMAIL_HOST_PASSWORD = 'ihta rarr pszs vsaa'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 
+# PAYME_MERCHANT_ID = 'your_merchant_id'  # Payme Merchant ID
+# PAYME_SECRET_KEY = 'your_secret_key'    # Payme Secret Key
+# PAYME_ENDPOINT = 'https://checkout.paycom.uz'  # Payme API endpoint
+#
 
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'maxmudovabdullo97@gmail.com'
-# EMAIL_HOST_PASSWORD = '3769197aa'
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "6424dss5b936420320077b5c755",  # token
+    "SECRET_KEY": "yHddI3RAdsdew1RN&H5f0Svcrx@vq9muNsmHUo49dTv",  # password
+    "ACCOUNTS": {
+        "KEY": "order_id"
+    },
+}
+PAYME: dict = {
+    'PAYME_ID': '6424dss5b936420320077b5c755',
+    'PAYME_KEY': 'yHddI3RAdsdew1RN&H5f0Svcrx@vq9muNsmHUo49dTv',
+    'PAYME_URL': '',
+    'PAYME_CALL_BACK_URL': '',
+    'PAYME_MIN_AMOUNT': 0,
+    'PAYME_ACCOUNT': 'order_id',
+}
