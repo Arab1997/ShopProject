@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django-admin-honeypot = "*"
+django = "==4.1"
 
 [dev-packages]
 

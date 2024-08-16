@@ -180,7 +180,12 @@ def forgotPassword(request):
             })
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+
+            try:
+                send_email.send()
+            except Exception as e:
+                # Handle the exception (e.g., log the error)
+                print(f"An error occurred: {e}")
 
             messages.success(request, 'Password reset email has been sent to your email address.')
             return redirect('login')
@@ -188,6 +193,13 @@ def forgotPassword(request):
             messages.error(request, 'Account does not exist!')
             return redirect('forgotPassword')
     return render(request, 'accounts/forgotPassword.html')
+
+def send_welcome_email(email):
+    mail_subject = 'Welcome to Our Platform!'
+    message = 'Thank you for signing up!'
+    to_email = email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
 
 
 def resetpassword_validate(request, uidb64, token):
