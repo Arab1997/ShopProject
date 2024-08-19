@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'orders',
     'storages',
     'rest_framework',
+    'paycomuz',
 ]
 
 MIDDLEWARE = [
@@ -166,13 +167,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static")
+# ]
+# STATIC_ROOT = BASE_DIR / 'static'
 
-    os.path.join(BASE_DIR, "static")
-]
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
-STATIC_ROOT = BASE_DIR / 'static'
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
 # STATICFILES_DIRS = [
 #     'greatkart/static',
@@ -227,20 +235,13 @@ DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 # PAYME_MERCHANT_ID = 'your_merchant_id'  # Payme Merchant ID
 # PAYME_SECRET_KEY = 'your_secret_key'    # Payme Secret Key
 # PAYME_ENDPOINT = 'https://checkout.paycom.uz'  # Payme API endpoint
-#
 
-# PAYCOM_SETTINGS = {
-#     "KASSA_ID": "6424dss5b936420320077b5c755",  # token
-#     "SECRET_KEY": "yHddI3RAdsdew1RN&H5f0Svcrx@vq9muNsmHUo49dTv",  # password
-#     "ACCOUNTS": {
-#         "KEY": "order_id"
-#     },
-# }
-# PAYME: dict = {
-#     'PAYME_ID': '6424dss5b936420320077b5c755',
-#     'PAYME_KEY': 'yHddI3RAdsdew1RN&H5f0Svcrx@vq9muNsmHUo49dTv',
-#     'PAYME_URL': '',
-#     'PAYME_CALL_BACK_URL': '',
-#     'PAYME_MIN_AMOUNT': 0,
-#     'PAYME_ACCOUNT': 'order_id',
-# }
+
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "66c325238326c8dc50abd2f6",  # token
+    "SECRET_KEY": "E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz",  # password
+    "ACCOUNTS": {
+        "KEY": "order_id"
+    },
+    "TOKEN": "66c325238326c8dc50abd2f6", # token
+}
