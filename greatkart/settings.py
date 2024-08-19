@@ -9,24 +9,43 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
+import dj_database_url
 from decouple import config
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# load_dotenv(os.path.join(BASE_DIR/"eVar", ".env"))
+load_dotenv(os.path.join(BASE_DIR, "eVar", ".env"))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY='django-insecure-n)+l%k(eml^!arg%f$nn1(*@z(tj7+%v%m%hmm698c^s+)o9e)'
+# DEBUG = True
+
 SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+# Default hosts
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-ALLOWED_HOSTS = ['*']
+# Get additional hosts from environment variable
+extra_hosts = os.environ.get("ALLOWED_HOSTS", "")
+if extra_hosts:
+    ALLOWED_HOSTS += extra_hosts.split()
+
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = config('SECRET_KEY')
+#
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = config('DEBUG', default=False, cast=bool)
+#
+# ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +62,6 @@ INSTALLED_APPS = [
     'orders',
     'storages',
     'rest_framework',
-    # 'admin_honeypot',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +85,8 @@ ROOT_URLCONF = 'greatkart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        # 'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,24 +108,19 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+    )
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-#
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -151,21 +165,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'static'
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     'greatkart/static',
 ]
+# STORAGES = {
+#     # ...
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 STORAGES = {
-    # ...
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# DEFAULT_FILE_STORAGE = 'greatkart.media_storages.MediaStorage'
+DEFAULT_FILE_STORAGE = 'greatkart.media_storages.MediaStorage'
 
 # media files configuration
 MEDIA_URL = '/media/'
