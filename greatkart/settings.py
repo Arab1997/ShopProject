@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 # Default hosts
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'arab1997.pythonanywhere.com']
 
 # Get additional hosts from environment variable
 extra_hosts = os.environ.get("ALLOWED_HOSTS", "")
@@ -165,12 +165,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+
+    os.path.join(BASE_DIR, "static")
+]
+
 
 STATIC_ROOT = BASE_DIR / 'static'
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    'greatkart/static',
-]
+# STATICFILES_DIRS = [
+#     'greatkart/static',
+# ]
 # STORAGES = {
 #     # ...
 #     "staticfiles": {
