@@ -19,7 +19,6 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# load_dotenv(os.path.join(BASE_DIR/"eVar", ".env"))
 load_dotenv(os.path.join(BASE_DIR, "eVar", ".env"))
 
 # Quick-start development settings - unsuitable for production
@@ -38,15 +37,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'arab1997.pythonanywhere.com']
 extra_hosts = os.environ.get("ALLOWED_HOSTS", "")
 if extra_hosts:
     ALLOWED_HOSTS += extra_hosts.split()
-
-# # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config('SECRET_KEY')
-#
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = config('DEBUG', default=False, cast=bool)
-#
-# ALLOWED_HOSTS = ['*']
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -114,25 +104,6 @@ DATABASES = {
         default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
     )
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mydb',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -162,16 +133,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = '/static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static")
-# ]
-# STATIC_ROOT = BASE_DIR / 'static'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 if DEBUG:
     STATICFILES_DIRS = [
@@ -180,41 +150,15 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATICFILES_DIRS = [
-#     'greatkart/static',
-# ]
-# STORAGES = {
-#     # ...
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
-DEFAULT_FILE_STORAGE = 'greatkart.media_storages.MediaStorage'
-
 # media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 from django.contrib.messages import constants as messages
-
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_HOST = config('EMAIL_HOST')
@@ -225,23 +169,19 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'maxmudovabdullo97@gmail.com'
-# EMAIL_HOST_PASSWORD = 'ppsv nveq szie lfla'
-
-# PAYME_MERCHANT_ID = 'your_merchant_id'  # Payme Merchant ID
-# PAYME_SECRET_KEY = 'your_secret_key'    # Payme Secret Key
-# PAYME_ENDPOINT = 'https://checkout.paycom.uz'  # Payme API endpoint
-
-
+# PAYCOM_SETTINGS = {
+#     "KASSA_ID": "66c325238326c8dc50abd2f6",  # token
+#     "SECRET_KEY": "E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz",  # password
+#     "ACCOUNTS": {
+#         "KEY": "order_id"
+#     },
+#     "TOKEN": "66c325238326c8dc50abd2f6",  # token
+# }
 PAYCOM_SETTINGS = {
-    "KASSA_ID": "66c325238326c8dc50abd2f6",  # token
-    "SECRET_KEY": "E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz",  # password
-    "ACCOUNTS": {
-        "KEY": "order_id"
-    },
-    "TOKEN": "66c325238326c8dc50abd2f6", # token
+    'KASSA_ID': '66c325238326c8dc50abd2f6',
+    'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
+    'TOKEN': '66c325238326c8dc50abd2f6',
+    'ACCOUNTS': {
+        'KEY': 'order_id',  # Key from your transaction model
+    }
 }

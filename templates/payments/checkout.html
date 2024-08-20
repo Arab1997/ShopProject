@@ -1,0 +1,6 @@
+<form action="{% url 'payme_checkout' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="amount" value="{{ amount }}">
+    <input type="hidden" name="order_id" value="{{ order_id }}">
+    <button type="submit">Pay with Payme</button>
+</form>

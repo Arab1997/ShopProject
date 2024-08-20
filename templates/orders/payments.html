@@ -1,16 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-
-
 <section class="section-content padding-y bg">
 	<div class="container">
-
 		<!-- ============================ COMPONENT 1 ================================= -->
 		<h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
 		<div class="row">
-
 			<aside class="col-lg-8">
 				<div class="card">
 					<h5 class="card-header">Billing Address</h5>
@@ -24,14 +19,12 @@
 						{% if order.order_note %}
 						<b>Order Note: </b> {{order.order_note}}
 						{% endif %}
-
-
 					</div>
 				</div>
 				<div class="card">
 					<h5 class="card-header">Payment Method</h5>
 					<div class="card-body">
-						<p class="card-text">PayPal</p>
+						<p class="card-text">Payme</p>
 
 					</div>
 				</div>
@@ -44,7 +37,6 @@
 									<th scope="col">Product</th>
 									<th scope="col" width="120">Quantity</th>
 									<th scope="col" width="120">Price</th>
-
 								</tr>
 							</thead>
 							<tbody>
@@ -72,8 +64,8 @@
 									</td>
 									<td>
 										<div class="price-wrap">
-											<var class="price">$ {{ cart_item.sub_total }}</var>
-											<small class="text-muted"> $ {{ cart_item.product.price }} each </small>
+											<var class="price">{{ cart_item.sub_total }} sum </var>
+											<small class="text-muted">{{ cart_item.product.price }} sum each </small>
 										</div> <!-- price-wrap .// -->
 									</td>
 
@@ -93,115 +85,140 @@
 					<div class="card-body">
 						<dl class="dlist-align">
 							<dt>Total price:</dt>
-							<dd class="text-right">$ {{total}}</dd>
+							<dd class="text-right"> {{total}} sum</dd>
 						</dl>
 						<dl class="dlist-align">
 							<dt>Tax:</dt>
-							<dd class="text-right"> $ {{tax}}</dd>
+							<dd class="text-right">{{tax}} sum</dd>
 						</dl>
 						<dl class="dlist-align">
 							<dt>Grand Total:</dt>
-							<dd class="text-right text-dark b"><strong>$ {{grand_total}}</strong></dd>
+							<dd class="text-right text-dark b"><strong>{{grand_total}} sum</strong></dd>
 						</dl>
 						<hr>
-						<p class="text-center mb-3">
-							<img src="{% static './images/misc/payments.png' %}" height="26">
-						</p>
 
 
-						<div id="paypal-button-container">
-							<!-- PayPal Button Will Load -->
-						</div>
+<!--							<body onload="Paycom.Button('#form-payme', '#button-container')">-->
+<!--								<form id="form-payme" method="POST" action="https://checkout.paycom.uz/">-->
+<!--									<input type="hidden" name="merchant" value="587f72c72cac0d162c722ae2">-->
+<!--									<input type="hidden" name="account[order_id]" value="197">-->
+<!--									<input type="hidden" name="amount" value="500">-->
+<!--									<input type="hidden" name="lang" value="ru">-->
+<!--									<input type="hidden" name="button" data-type="svg" value="colored">-->
+<!--									<div id="button-container"></div>-->
+<!--								</form>-->
+<!--								&lt;!&ndash; ... &ndash;&gt;-->
+<!--								<script src="https://cdn.paycom.uz/integration/js/checkout.min.js"></script>-->
+<!--							</body>-->
+
+
+									<body onload="Payme.Button('#form-payme', '#button-container')">
+										<form id="form-payme" method="POST" action="https://checkout.paycom.uz/">
+											<input type="hidden" name="merchant" value="{{ payme_merchant_id }}">
+											<input type="hidden" name="account[order_id]" value="{{ order.order_number }}">
+											<input type="hidden" name="amount" value="{{ grand_total }}">
+											<input type="hidden" name="lang" value="ru">
+											<input type="hidden" name="button" data-type="svg" value="colored">
+											<div id="button-container">Payme button should appear here.</div>
+										</form>
+										<script src="https://cdn.payme.uz/integration/js/checkout.min.js"></script>
+										<script>
+											console.log('Initializing Payme button...');
+											Payme.Button('#form-payme', '#button-container');
+										</script>
+									</body>
+
 
 					</div> <!-- card-body.// -->
 				</div> <!-- card.// -->
-
 			</aside> <!-- col.// -->
-
-
-		</div> <!-- row.// -->
-
+		</div> <!--row.// -->
 		<!-- ============================ COMPONENT 1 END .// ================================= -->
-
 	</div> <!-- container .//  -->
 </section>
+
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
+<section class="section-content padding-y bg">
+    <div class="container">
+        <h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
+        <div class="row">
+            <!-- Order and Payment Details Here -->
+            <aside class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-right">{{ total }} sum</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Tax:</dt>
+                            <dd class="text-right">{{ tax }}sum</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Grand Total:</dt>
+                            <dd class="text-right text-dark b"><strong>{{ grand_total }} sum</strong></dd>
+                        </dl>
+                        <hr>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+<script src="https://payme.uz/static/payme/button.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var container = document.getElementById('Payme-button-container');
 
-	function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+        Payme.Buttons({
+            style: {
+                color: 'blue',
+                shape: 'rect',
+                label: 'pay',
+                height: 40
+            },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                             value: "{{ grand_total|floatformat:0 }}"
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    console.log(details);
+                    sendData(details);
+                }).catch(function(error) {
+					console.error('Payment failed:', error);
+				 // Handle the error, perhaps redirect to an error page or show a message
+				});
             }
+        }).render('#Payme-button-container');
+
+        function sendData(details) {
+            fetch("{% url 'payments' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    orderID: "{{ order.order_number }}",
+                    transID: details.id,
+                    payment_method: 'Payme',
+                    status: details.status
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = "{% url 'order_complete' %}?order_number=" + data.order_number + "&payment_id=" + data.transID;
+            });
         }
-    }
-    return cookieValue;
-}
-
-	var amount = "{{ grand_total }}"
-	var url = "{% url 'payments' %}"
-	var csrftoken = getCookie('csrftoken');
-	var orderID = "{{order.order_number}}"
-	var payment_method = 'PayPal'
-	var redirect_url = "{% url 'order_complete' %}"
-	// Render the PayPal button into #paypal-button-container
-	paypal.Buttons({
-
-		style: {
-			color: 'blue',
-			shape: 'rect',
-			label: 'pay',
-			height: 40
-		},
-
-		// Set up the transaction
-		createOrder: function(data, actions) {
-			return actions.order.create({
-				purchase_units: [{
-					amount: {
-						value: amount,
-					}
-				}]
-			});
-		},
-
-		// Finalize the transaction
-		onApprove: function(data, actions) {
-			return actions.order.capture().then(function(details) {
-				// Show a success message to the buyer
-				console.log(details);
-				sendData();
-				function sendData(){
-					fetch(url, {
-						method : "POST",
-						headers: {
-							"Content-type": "application/json",
-							"X-CSRFToken": csrftoken,
-						},
-						body: JSON.stringify({
-							orderID: orderID,
-							transID: details.id,
-							payment_method: payment_method,
-							status: details.status,
-						}),
-					})
-				  .then((response) => response.json())
-				  .then((data) => {
-						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
-					});
-				}
-			});
-		}
-
-
-	}).render('#paypal-button-container');
+    });
 </script>
+
+
 
 {% endblock %}

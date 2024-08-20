@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.views import View
+
 from carts.models import CartItem
+from greatkart import settings
 from .forms import OrderForm
 import datetime
 from .models import Order, Payment, OrderProduct
@@ -9,8 +12,76 @@ from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
+from .models import Payment
+from django.urls import reverse
+
 from paycomuz.views import MerchantAPIView
 from paycomuz import Paycom
+
+def payment_page(request, order_id):
+    order = get_object_or_404(Order, order_number=order_id)
+
+    # Calculate the total amount (grand total)
+    grand_total = order.order_total + order.tax
+
+    # Fetch Paycom Merchant ID from settings
+    paycom_merchant_id = settings.PAYCOM_SETTINGS['KASSA_ID']
+
+    context = {
+        'order': order,
+        'grand_total': grand_total * 100,  # Convert to amount in tiyin (smallest currency unit)
+        'paycom_merchant_id': paycom_merchant_id,
+    }
+
+    return render(request, 'orders/payments.html', context)
+
+
+
+
+
+class CheckOrder(Paycom):
+    def check_order(self, amount, account, *args, **kwargs):
+        return self.ORDER_FOUND
+
+
+def successfully_payment(self, account, transaction, *args, **kwargs):
+    print(account)
+
+
+def cancel_payment(self, account, transaction, *args, **kwargs):
+    print(account)
+
+
+class TestView(MerchantAPIView):
+    VALIDATE_CLASS = CheckOrder
+
+
+
+
+
+class PaymeCheckoutView(View):
+    def post(self, request):
+        amount = request.POST.get('amount')
+        order_id = request.POST.get('order_id')
+
+        # Create a payment instance
+        payment = Payment.objects.create(
+            user=request.user,
+            amount=amount,
+            transaction_id=order_id,
+            status='Pending'
+        )
+
+        # Redirect to a confirmation page or handle payment process
+        return redirect(reverse('payment_confirmation', args=[payment.id]))
+
+def payment_confirmation(request, payment_id):
+    payment = Payment.objects.get(id=payment_id)
+    return render(request, 'payments/confirmation.html', {'payment': payment})
+
+
+
+
 
 
 def payments(request):
@@ -131,6 +202,8 @@ def place_order(request, total=0, quantity=0,):
                 'total': total,
                 'tax': tax,
                 'grand_total': grand_total,
+                # 'grand_total': order.grand_total,  # Grand total of the order
+                'paycom_merchant_id': '66c325238326c8dc50abd2f6',  # Your Paycom merchant ID
             }
             return render(request, 'orders/payments.html', context)
     else:
@@ -163,27 +236,3 @@ def order_complete(request):
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
 
-
-class CheckOrder(Paycom):
-    def check_order(self, amount, account, *args, **kwargs):
-        order = Order.objects.filter(id=account["order_id"], is_finished = False).first()
-        if not order:
-            return self.ORDER_NOT_FOND
-        if order.order_total * 100 != amount:
-            return self.INVALID_AMOUNT
-
-        return self.ORDER_FOUND
-
-def successfully_payment(self, account, transaction, *args, **kwargs):
-    order = Order.objects.filter(id=transaction.order_key).first()
-    if not order:
-        return self.ORDER_NOT_FOND
-    order.is_ordered = True
-    order.save()
-
-def cancel_payment(self, account, transaction, *args, **kwargs):
-    print(account)
-
-
-class TestView(MerchantAPIView):
-    VALIDATE_CLASS = CheckOrder
