@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 # Default hosts
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'arab1997.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'djangoshop1.pythonanywhere.com']
 
 # Get additional hosts from environment variable
 extra_hosts = os.environ.get("ALLOWED_HOSTS", "")
@@ -133,8 +133,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STATIC_URL = '/static/'
@@ -169,14 +167,6 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
-# PAYCOM_SETTINGS = {
-#     "KASSA_ID": "66c325238326c8dc50abd2f6",  # token
-#     "SECRET_KEY": "E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz",  # password
-#     "ACCOUNTS": {
-#         "KEY": "order_id"
-#     },
-#     "TOKEN": "66c325238326c8dc50abd2f6",  # token
-# }
 PAYCOM_SETTINGS = {
     'KASSA_ID': '66c325238326c8dc50abd2f6',
     'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
@@ -185,3 +175,16 @@ PAYCOM_SETTINGS = {
         'KEY': 'order_id',  # Key from your transaction model
     }
 }
+
+
+# PAYCOM_SETTINGS = {
+#     'HOST':'https://checkout.test.paycom.uz/api',
+#     'ID': '66c325238326c8dc50abd2f6',
+#     'PATH_CLASS': 'apps.order.views',
+#     'KASSA_ID': '66c325238326c8dc50abd2f6',
+#     'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
+#     'TOKEN': '66c325238326c8dc50abd2f6',
+#     'ACCOUNTS': {
+#         'KEY': 'order_id',  # Key from your transaction model
+#     }
+# }

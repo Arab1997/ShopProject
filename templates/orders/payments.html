@@ -112,21 +112,36 @@
 <!--							</body>-->
 
 
-									<body onload="Payme.Button('#form-payme', '#button-container')">
-										<form id="form-payme" method="POST" action="https://checkout.paycom.uz/">
-											<input type="hidden" name="merchant" value="{{ payme_merchant_id }}">
-											<input type="hidden" name="account[order_id]" value="{{ order.order_number }}">
-											<input type="hidden" name="amount" value="{{ grand_total }}">
-											<input type="hidden" name="lang" value="ru">
-											<input type="hidden" name="button" data-type="svg" value="colored">
-											<div id="button-container">Payme button should appear here.</div>
-										</form>
-										<script src="https://cdn.payme.uz/integration/js/checkout.min.js"></script>
-										<script>
-											console.log('Initializing Payme button...');
-											Payme.Button('#form-payme', '#button-container');
-										</script>
-									</body>
+									<form action="{% url 'payme_payment' %}" method="POST">
+										{% csrf_token %}
+										<input type="hidden" name="amount" value="{{ amount }}">
+										<input type="hidden" name="order_id" value="{{ order_id }}">
+										<button type="submit" class="btn btn-primary">Pay with Payme</button>
+									</form>
+
+<!--									<body onload="Payme.Button('#form-payme', '#button-container')">-->
+<!--										<form id="form-payme" method="POST" action="https://checkout.paycom.uz/">-->
+<!--											<input type="hidden" name="merchant" value="{{ payme_merchant_id }}">-->
+<!--											<input type="hidden" name="account[order_id]" value="{{ order.order_number }}">-->
+<!--											<input type="hidden" name="amount" value="{{ grand_total }}">-->
+<!--											<input type="hidden" name="lang" value="ru">-->
+<!--											<input type="hidden" name="button" data-type="svg" value="colored">-->
+<!--											<div id="button-container">Payme button should appear here.</div>-->
+<!--										</form>-->
+<!--										<script src="https://cdn.payme.uz/integration/js/checkout.min.js"></script>-->
+<!--										<script src="https://payme.uz/static/payme/button.js"></script>-->
+<!--										<script>-->
+<!--											console.log('Initializing Payme button...');-->
+<!--											Payme.Button('#form-payme', '#button-container');-->
+<!--										</script>-->
+
+<!--									<script src="https://cdn.paycom.uz/integration/js/checkout.min.js"></script>-->
+<!--									<script>-->
+<!--										document.addEventListener("DOMContentLoaded", function() {-->
+<!--											Paycom.Button('#form-payme', '#button-container');-->
+<!--										});-->
+<!--									</script>-->
+<!--									</body>-->
 
 
 					</div> <!-- card-body.// -->

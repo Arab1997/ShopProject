@@ -1,3 +1,6 @@
+from decimal import Decimal, InvalidOperation
+from urllib import request
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views import View
@@ -11,12 +14,60 @@ import json
 from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-
 from .models import Payment
-from django.urls import reverse
+from django.core.exceptions import ValidationError
+from django import forms
 
-from paycomuz.views import MerchantAPIView
-from paycomuz import Paycom
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['amount']
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if amount is None or amount == "":
+            raise forms.ValidationError("This field is required and must be a decimal number.")
+        return amount
+
+
+class PaymentConfirmationView(View):
+    def get(self, request, payment_id):
+        payment = Payment.objects.get(id=payment_id)
+        context = {
+            'payment': payment
+        }
+        return render(request, 'payment_confirmation.html', context)
+
+def process_payment(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        try:
+            amount = float(amount)
+        except ValueError:
+            raise ValidationError("The value must be a decimal number.")
+
+        # Proceed with creating the Payment object
+        payment = Payment.objects.create(
+            user=request.user,
+            amount=amount,
+            payment_method='Payme'
+        )
+        return redirect('payment_confirmation', payment_id=payment.id)
+    return render(request, 'payment_form.html')
+
+
+class PaymentConfirmationView(View):
+    def get(self, request, payment_id):
+        # Retrieve the payment object using the payment ID
+        payment = get_object_or_404(Payment, id=payment_id)
+
+        # Pass the payment object to the template
+        context = {
+            'payment': payment
+        }
+        return render(request, 'payment_confirmation.html', context)
+
+
 
 def payment_page(request, order_id):
     order = get_object_or_404(Order, order_number=order_id)
@@ -29,60 +80,21 @@ def payment_page(request, order_id):
 
     context = {
         'order': order,
-        'grand_total': grand_total * 100,  # Convert to amount in tiyin (smallest currency unit)
+        'grand_total': grand_total,  # Convert to amount in tiyin (smallest currency unit)
         'paycom_merchant_id': paycom_merchant_id,
     }
 
     return render(request, 'orders/payments.html', context)
 
-
-
-
-
-class CheckOrder(Paycom):
-    def check_order(self, amount, account, *args, **kwargs):
-        return self.ORDER_FOUND
-
-
 def successfully_payment(self, account, transaction, *args, **kwargs):
     print(account)
-
 
 def cancel_payment(self, account, transaction, *args, **kwargs):
     print(account)
 
-
-class TestView(MerchantAPIView):
-    VALIDATE_CLASS = CheckOrder
-
-
-
-
-
-class PaymeCheckoutView(View):
-    def post(self, request):
-        amount = request.POST.get('amount')
-        order_id = request.POST.get('order_id')
-
-        # Create a payment instance
-        payment = Payment.objects.create(
-            user=request.user,
-            amount=amount,
-            transaction_id=order_id,
-            status='Pending'
-        )
-
-        # Redirect to a confirmation page or handle payment process
-        return redirect(reverse('payment_confirmation', args=[payment.id]))
-
 def payment_confirmation(request, payment_id):
     payment = Payment.objects.get(id=payment_id)
     return render(request, 'payments/confirmation.html', {'payment': payment})
-
-
-
-
-
 
 def payments(request):
     body = json.loads(request.body)
@@ -235,4 +247,5 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
+
 
