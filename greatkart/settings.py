@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
     'category',
     'accounts',
     'store',
@@ -167,6 +169,9 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
+
+
+
 PAYCOM_SETTINGS = {
     'KASSA_ID': '66c325238326c8dc50abd2f6',
     'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
@@ -176,6 +181,15 @@ PAYCOM_SETTINGS = {
     }
 }
 
+# PAYCOM_MERCHANT_ID = '66c325238326c8dc50abd2f6'
+# PAYCOM_SECRET_KEY = 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz'
+# PAYCOM_URL = 'https://checkout.paycom.uz'
+
+
+#
+# PAYME_API_URL = 'https://payme.uz/api/endpoint'
+# PAYME_MERCHANT_ID = '66c325238326c8dc50abd2f6'
+# PAYME_SECRET_KEY = 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz'
 
 # PAYCOM_SETTINGS = {
 #     'HOST':'https://checkout.test.paycom.uz/api',

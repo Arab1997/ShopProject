@@ -1,12 +1,6 @@
-from decimal import Decimal, InvalidOperation
-from urllib import request
-
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from django.views import View
-
 from carts.models import CartItem
-from greatkart import settings
 from .forms import OrderForm
 import datetime
 from .models import Order, Payment, OrderProduct
@@ -14,87 +8,85 @@ import json
 from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from .models import Payment
-from django.core.exceptions import ValidationError
-from django import forms
-
-class PaymentForm(forms.ModelForm):
-    class Meta:
-        model = Payment
-        fields = ['amount']
-
-    def clean_amount(self):
-        amount = self.cleaned_data.get('amount')
-        if amount is None or amount == "":
-            raise forms.ValidationError("This field is required and must be a decimal number.")
-        return amount
 
 
-class PaymentConfirmationView(View):
-    def get(self, request, payment_id):
-        payment = Payment.objects.get(id=payment_id)
-        context = {
-            'payment': payment
-        }
-        return render(request, 'payment_confirmation.html', context)
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views import View
+from .models import Order
+from paycomuz import Paycom
+from paycomuz.views import MerchantAPIView
 
-def process_payment(request):
-    if request.method == 'POST':
-        amount = request.POST.get('amount')
+
+class CheckOrder(Paycom):
+    def check_order(self, amount, account, transaction, *args, **kwargs):
+        print(amount, account)
         try:
-            amount = float(amount)
+            order = Order.objects.get(id=account["order_id"])
+        except Order.DoesNotExist:
+            return self.ORDER_NOT_FOUND
+        if order.order_total * 100 != amount:
+            return self.INVALID_AMOUNT
+        return self.ORDER_FOUND
+
+    def successfully_payment(self, account, transaction, *args, **kwargs):
+        try:
+            order = Order.objects.get(id=transaction.order_key)
+            order.is_ordered = True
+            order.save()
+        except Order.DoesNotExist:
+            return self.ORDER_NOT_FOUND
+
+    def cancel_payment(self, account, transaction, *args, **kwargs):
+        print(account)
+
+class TestView(MerchantAPIView):
+    VALIDATE_CLASS = CheckOrder
+
+    def get(self, request, *args, **kwargs):
+        # Render a checkout page
+        return render(request, 'store/paycom_checkout.html')
+
+    def post(self, request, *args, **kwargs):
+        # Extract payment information from POST request
+        order_id = request.POST.get('order_id')
+        amount = request.POST.get('amount')
+
+        print(f"Order ID: {order_id}, Amount: {amount}")
+        if not order_id or not amount:
+            return HttpResponse("Order ID or amount is missing", status=400)
+
+        try:
+            order_id = int(order_id)
+            amount = int(amount)
         except ValueError:
-            raise ValidationError("The value must be a decimal number.")
+            return HttpResponse("Invalid order ID or amount format", status=400)
 
-        # Proceed with creating the Payment object
-        payment = Payment.objects.create(
-            user=request.user,
-            amount=amount,
-            payment_method='Payme'
-        )
-        return redirect('payment_confirmation', payment_id=payment.id)
-    return render(request, 'payment_form.html')
+        # Perform validation and payment processing
+        try:
+            order = Order.objects.get(id=order_id)
+            if order.order_total * 100 != amount:
+                return HttpResponse("Invalid payment amount", status=400)
+
+            # Process payment with Paycom
+            paycom_response = self.process_payment(order_id, amount)
+
+            if paycom_response.success:
+                return redirect('paycom_success')
+            else:
+                return HttpResponse("Payment failed", status=400)
+
+        except Order.DoesNotExist:
+            return HttpResponse("Order not found", status=404)
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}", status=500)
+
+    def process_payment(self, order_id, amount):
+        # Placeholder method to handle Paycom payment processing
+        # Implement actual Paycom payment integration here
+        return Paycom().initiate_payment(order_id, amount)
 
 
-class PaymentConfirmationView(View):
-    def get(self, request, payment_id):
-        # Retrieve the payment object using the payment ID
-        payment = get_object_or_404(Payment, id=payment_id)
-
-        # Pass the payment object to the template
-        context = {
-            'payment': payment
-        }
-        return render(request, 'payment_confirmation.html', context)
-
-
-
-def payment_page(request, order_id):
-    order = get_object_or_404(Order, order_number=order_id)
-
-    # Calculate the total amount (grand total)
-    grand_total = order.order_total + order.tax
-
-    # Fetch Paycom Merchant ID from settings
-    paycom_merchant_id = settings.PAYCOM_SETTINGS['KASSA_ID']
-
-    context = {
-        'order': order,
-        'grand_total': grand_total,  # Convert to amount in tiyin (smallest currency unit)
-        'paycom_merchant_id': paycom_merchant_id,
-    }
-
-    return render(request, 'orders/payments.html', context)
-
-def successfully_payment(self, account, transaction, *args, **kwargs):
-    print(account)
-
-def cancel_payment(self, account, transaction, *args, **kwargs):
-    print(account)
-
-def payment_confirmation(request, payment_id):
-    payment = Payment.objects.get(id=payment_id)
-    return render(request, 'payments/confirmation.html', {'payment': payment})
 
 def payments(request):
     body = json.loads(request.body)
@@ -214,8 +206,6 @@ def place_order(request, total=0, quantity=0,):
                 'total': total,
                 'tax': tax,
                 'grand_total': grand_total,
-                # 'grand_total': order.grand_total,  # Grand total of the order
-                'paycom_merchant_id': '66c325238326c8dc50abd2f6',  # Your Paycom merchant ID
             }
             return render(request, 'orders/payments.html', context)
     else:
@@ -247,5 +237,3 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
-
-
