@@ -31,7 +31,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 # Default hosts
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'djangoshop1.pythonanywhere.com']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'djangoshop1.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 # Get additional hosts from environment variable
 extra_hosts = os.environ.get("ALLOWED_HOSTS", "")
@@ -54,7 +55,9 @@ INSTALLED_APPS = [
     'orders',
     'storages',
     'rest_framework',
-    'paycomuz',
+    # 'paycomuz',
+    # 'payment',
+    'payme',
 ]
 
 MIDDLEWARE = [
@@ -170,35 +173,17 @@ SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
 
+PAYME_MERCHANT_ID = '66cc53408326c8dc50ac7216'
+PAYME_MERCHANT_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
 
 
-PAYCOM_SETTINGS = {
-    'KASSA_ID': '66c325238326c8dc50abd2f6',
-    'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
-    'TOKEN': '66c325238326c8dc50abd2f6',
-    'ACCOUNTS': {
-        'KEY': 'order_id',  # Key from your transaction model
-    }
+PAYME: dict = {
+    'PAYME_ID': '66cc53408326c8dc50ac7216',
+    'PAYME_KEY': 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r',
+    'PAYME_URL': 'https://checkout.test.paycom.uz',
+    'PAYME_CALL_BACK_URL': 'https://64e4-82-215-100-34.ngrok-free.app/payments/merchant/', # merchant api callback url
+    'PAYME_MIN_AMOUNT': 1, # integer field
+    'PAYME_ACCOUNT': 'order_id',
 }
 
-# PAYCOM_MERCHANT_ID = '66c325238326c8dc50abd2f6'
-# PAYCOM_SECRET_KEY = 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz'
-# PAYCOM_URL = 'https://checkout.paycom.uz'
-
-
-#
-# PAYME_API_URL = 'https://payme.uz/api/endpoint'
-# PAYME_MERCHANT_ID = '66c325238326c8dc50abd2f6'
-# PAYME_SECRET_KEY = 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz'
-
-# PAYCOM_SETTINGS = {
-#     'HOST':'https://checkout.test.paycom.uz/api',
-#     'ID': '66c325238326c8dc50abd2f6',
-#     'PATH_CLASS': 'apps.order.views',
-#     'KASSA_ID': '66c325238326c8dc50abd2f6',
-#     'SECRET_KEY': 'E7@u5giUb%FW#W%vspEC7P%QsKsHiBs98kiz',# password
-#     'TOKEN': '66c325238326c8dc50abd2f6',
-#     'ACCOUNTS': {
-#         'KEY': 'order_id',  # Key from your transaction model
-#     }
-# }
+ORDER_MODEL = 'orders.models.Order'

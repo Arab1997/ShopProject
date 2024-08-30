@@ -3,28 +3,19 @@ from accounts.models import Account
 from store.models import Product, Variation
 
 
-
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
     payment_method = models.CharField(max_length=100)
-    amount_paid = models.CharField(max_length=100) # this is the total amount paid
+    amount_paid = models.CharField(max_length=100) # Default qiymatni qo'shish
+    # this is the total amount paid
+    # amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
     def __str__(self):
         return self.payment_id
-
-class PaycomTransaction(models.Model):
-    payment = models.OneToOneField(Payment, on_delete=models.CASCADE, related_name='paycom_transaction')
-    transaction_id = models.CharField(max_length=255)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'Paycom Transaction {self.transaction_id} - {self.status}'
 
 class Order(models.Model):
     STATUS = (
@@ -36,7 +27,7 @@ class Order(models.Model):
 
     user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
-    order_number = models.CharField(max_length=20)
+    order_id = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -47,8 +38,10 @@ class Order(models.Model):
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     order_note = models.CharField(max_length=100, blank=True)
-    order_total = models.DecimalField(max_digits=10, decimal_places=2)
-    tax = models.FloatField()
+    # amount = models.DecimalField(max_digits=10, default=0,decimal_places=2)
+    # amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    amount = models.IntegerField()
+    tax = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='New')
     ip = models.CharField(blank=True, max_length=20)
     is_ordered = models.BooleanField(default=False)
@@ -62,7 +55,7 @@ class Order(models.Model):
         return f'{self.address_line_1} {self.address_line_2}'
 
     def __str__(self):
-        return self.first_name
+        return f'Order {self.order_id} - {self.status}'
 
 
 class OrderProduct(models.Model):

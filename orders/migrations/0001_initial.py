@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='Order',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order_number', models.CharField(max_length=20)),
+                ('order_id', models.CharField(max_length=20)),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
                 ('phone', models.CharField(max_length=15)),
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(max_length=50)),
                 ('city', models.CharField(max_length=50)),
                 ('order_note', models.CharField(blank=True, max_length=100)),
-                ('order_total', models.FloatField()),
+                ('amount', models.FloatField()),
                 ('tax', models.FloatField()),
                 ('status', models.CharField(choices=[('New', 'New'), ('Accepted', 'Accepted'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled')], default='New', max_length=10)),
                 ('ip', models.CharField(blank=True, max_length=20)),

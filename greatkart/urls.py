@@ -18,20 +18,23 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from orders.views import PaymeCallBackAPIView
 from . import views
 
 urlpatterns = [
-    path('securelogin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('store/', include('store.urls')),
-    path('cart/', include('carts.urls')),
-    path('accounts/', include('accounts.urls')),
+                  path('securelogin/', admin.site.urls),
+                  path('', views.home, name='home'),
+                  path('store/', include('store.urls')),
+                  path('cart/', include('carts.urls')),
+                  path('accounts/', include('accounts.urls')),
 
+                  # # paycomuz
+                  # path('payment/', include('orders.urls')),
 
-    # paycomuz
-    # path('payment/', include('payment.urls')),
+                  # payme pkg
+                  path('payments/merchant/', PaymeCallBackAPIView.as_view()),  # call back for merchant transactions
 
-
-    # ORDERS
-    path('orders/', include('orders.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  # ORDERS
+                  path('orders/', include('orders.urls')),
+                  # path('orders/', include('orders.urls', namespace='orders')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
