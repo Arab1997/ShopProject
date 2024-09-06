@@ -101,30 +101,39 @@
                         <hr>
 
 
-                        <!--                        <h1>To'lov sahifasi</h1>-->
-                        <!--                        <p>To'lov amalga oshirilmoqda...</p>-->
-                        <!--                        <p>Agar avtomatik yo'naltirilmasangiz, <a href="{{ payment_link }}">bu yerga bosing</a>.</p>-->
 
-
-                        <form action="{% url 'payme_payment' %}" method="post">
+                        <form action="{% url 'generate_pay_link' %}" method="post">
                             {% csrf_token %}
+                            <!-- Hidden fields for order ID and amount -->
                             <input name="order_id" type="hidden" value="{{ order_id }}">
                             <input name="amount" type="hidden" value="{{ amount }}">
-                            <button type="submit">Payme orqali to'lash</button>
+
+                            <!-- Submit button to trigger the payment -->
+                            <button type="submit">Pay with Payme</button>
+                        </form>
+
+                         <form action="{% url 'payme_payment' %}" method="post">
+                            {% csrf_token %}
+                            <!-- Hidden fields for order ID and amount -->
+                            <input name="order_id" type="hidden" value="{{ order_id }}">
+                            <input name="amount" type="hidden" value="{{ amount }}">
+
+                            <!-- Submit button to trigger the payment -->
+                            <button type="submit">Pay with Payme</button>
                         </form>
 
 
-                        <!-- To'lov ma'lumotlarini ko'rsatish -->
-                        <div class="payment-info">
-                            <p><strong>Buyurtma ID:</strong> {{ order_id }}</p>
-                            <p><strong>To'lov miqdori:</strong> {{ amount }} UZS</p>
-                        </div>
+                        <!--                        &lt;!&ndash; To'lov ma'lumotlarini ko'rsatish &ndash;&gt;-->
+                        <!--                        <div class="payment-info">-->
+                        <!--                            <p><strong>Buyurtma ID:</strong> {{ order_id }}</p>-->
+                        <!--                            <p><strong>To'lov miqdori:</strong> {{ amount }} UZS</p>-->
+                        <!--                        </div>-->
 
-                        <!-- To'lov linkini ko'rsatish -->
-                        <div class="payment-link">
-                            <p>To'lovni amalga oshirish uchun quyidagi tugmani bosing:</p>
-                            <a class="pay-button" href="{{ pay_link }}" target="_blank">To'lovni amalga oshirish</a>
-                        </div>
+                        <!--                        &lt;!&ndash; To'lov linkini ko'rsatish &ndash;&gt;-->
+                        <!--                        <div class="payment-link">-->
+                        <!--                            <p>To'lovni amalga oshirish uchun quyidagi tugmani bosing:</p>-->
+                        <!--                            <a class="pay-button" href="{{ pay_link }}" target="_blank">To'lovni amalga oshirish</a>-->
+                        <!--                        </div>-->
 
 
                     </div> <!-- card-body.// -->

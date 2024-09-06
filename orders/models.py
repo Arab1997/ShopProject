@@ -2,17 +2,17 @@ from django.db import models
 from accounts.models import Account
 from store.models import Product, Variation
 
-
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
     payment_method = models.CharField(max_length=100)
-    amount_paid = models.CharField(max_length=100) # Default qiymatni qo'shish
-    # this is the total amount paid
-    # amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default='New')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # To'lov va buyurtma o'rtasidagi bog'lanish
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='payments', null=True, blank=True)
+    transaction_id = models.CharField(max_length=255, unique=True)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.payment_id
@@ -26,8 +26,10 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
-    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
-    order_id = models.CharField(max_length=255, unique=True)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True, related_name='order_payments')
+    order_id = models.CharField(max_length=20, unique=True,blank=True)  # Order ID-ni avtomatik generatsiya qilish uchun blank=True
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    status = models.CharField(max_length=10, choices=STATUS, default='New')
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -38,24 +40,24 @@ class Order(models.Model):
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     order_note = models.CharField(max_length=100, blank=True)
-    # amount = models.DecimalField(max_digits=10, default=0,decimal_places=2)
-    # amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    amount = models.IntegerField()
     tax = models.IntegerField()
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
     ip = models.CharField(blank=True, max_length=20)
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        # Ensure this returns a simple string representation, not combined with other strings
+        return f'Order {self.id}'
+
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
-
+    #
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
 
-    def __str__(self):
-        return f'Order {self.order_id} - {self.status}'
+    # def __str__(self):
+    #     return f'Order {self.order_id} - {self.status}'
 
 
 class OrderProduct(models.Model):

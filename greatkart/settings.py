@@ -173,15 +173,19 @@ SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
 
-PAYME_MERCHANT_ID = '66cc53408326c8dc50ac7216'
+
+ # Replace with your actual merchant ID from Payme
+PAYME_URL = 'https://checkout.paycom.uz/api'  # Base URL for the Payme API
+PAYME_SECRET_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
 PAYME_MERCHANT_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
+PAYME_MERCHANT_ID = '66cc53408326c8dc50ac7216'  # Replace with your actual merchant ID from Payme
 
 
 PAYME: dict = {
     'PAYME_ID': '66cc53408326c8dc50ac7216',
     'PAYME_KEY': 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r',
     'PAYME_URL': 'https://checkout.test.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'https://64e4-82-215-100-34.ngrok-free.app/payments/merchant/', # merchant api callback url
+    'PAYME_CALL_BACK_URL': 'https://b4fa-82-215-100-34.ngrok-free.app/payments/merchant/', # merchant api callback url
     'PAYME_MIN_AMOUNT': 1, # integer field
     'PAYME_ACCOUNT': 'order_id',
 }
