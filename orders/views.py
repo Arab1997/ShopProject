@@ -1,171 +1,277 @@
+import base64
 import datetime
 import hashlib
 import json
+import re
+from pprint import pprint
+
+import requests
 from django.conf import settings
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from payme.methods.generate_link import GeneratePayLink
 from payme.views import MerchantAPIView
 from rest_framework import serializers
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from carts.models import CartItem
 from store.models import Product
 from .forms import OrderForm
 from .models import Order
 from .models import Payment, OrderProduct
-from django.http import HttpResponse
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-import requests
-import re
-from django.conf import settings
-import base64
-import requests
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 
 PAYME_API_URL = "https://checkout.paycom.uz/api"  # Payme.uz API endpoint
 PAYME_MERCHANT_ID = "66cc53408326c8dc50ac7216"  # Sizning Payme.uz merchant ID
 
+# pay_link = GeneratePayLink(
+#     order_id="999",
+#     amount=9999,
+#     callback_url="https://b4fa-82-215-100-34.ngrok-free.app/payment-callback/"
+# ).generate_link()
+#
+# pprint(pay_link)
 
 
-
-class GeneratePayLink:
-    def __init__(self, order_id, amount):
-        self.order_id = order_id
-        self.amount = amount
-
-    def generate_link(self):
-        payload = {
-            'merchant_id': settings.PAYME_MERCHANT_ID,
-            'order_id': self.order_id,
-            'amount': self.amount,
-            'return_url': 'http://127.0.0.1:8000/payment-return/',
-            'callback_url': 'https://b4fa-82-215-100-34.ngrok-free.app/payment-callback/',
-        }
-
-        auth_string = f"{settings.PAYME_MERCHANT_ID}:{settings.PAYME_SECRET_KEY}"
-        auth_header = base64.b64encode(auth_string.encode()).decode()
-
-
-        headers = {'Content-Type': 'application/json'}
-
-
-        headers = {
-            'Content-Type': 'application/json',
-            'Authorization': f'Basic {auth_header}'
-        }
-
-        try:
-            response = requests.post(f'{settings.PAYME_URL}/create', json=payload, headers=headers)
-            response.raise_for_status()  # Raises an HTTPError for bad responses
-
-            result = response.json()
-            print("Payme API Response:", result)  # Log the response for debugging
-
-            if result.get('status') == 'success':
-                return result.get('pay_link')
-            else:
-                error_message = result.get('message', 'Failed to generate payment link')
-                raise Exception(f"Payme API Error: {error_message}")
-        except requests.exceptions.RequestException as e:
-            raise Exception(f'Error communicating with Payme: {e}')
-        except json.JSONDecodeError as e:
-            raise Exception(f'Invalid JSON response from Payme: {e}')
-
-def generate_pay_link_view(request):
-    if request.method == 'POST':
-        # Get the raw order_id and amount from POST data
-        order_id_raw = request.POST.get('order_id')
-        amount = request.POST.get('amount')
-
-        # Ensure that order_id is numeric
-        order_id = re.sub(r'\D', '', order_id_raw)  # Remove all non-numeric characters
-
-        if not order_id.isdigit():
-            return JsonResponse({'error': 'Invalid order ID provided.'}, status=400)
-
-        # Convert order_id to integer
-        order_id = int(order_id)
-
-        # Ensure order exists
-        order = get_object_or_404(Order, id=order_id)
-
-        # Generate payment link
-        pay_link_generator = GeneratePayLink(order_id=order.id, amount=amount)
-        try:
-            pay_link = pay_link_generator.generate_link()
-            return JsonResponse({'pay_link': pay_link})
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+# def get_order_details(order_id):
+#     # Извлекаем объект заказа из базы данных по его order_id
+#     order = get_object_or_404(Order, order_id=order_id)
+#
+#     # Получаем order_id и amount из объекта заказа
+#     order_id_value = order.order_id
+#     amount_value = order.amount
+#
+#     # Используйте order_id и amount в вашем запросе
+#     # Например, создайте параметры для API платежной системы
+#     payment_data = {
+#         "order_id": order_id_value,
+#         "amount": amount_value,
+#     }
+#
+#     return payment_data
 
 
 
 
-class GeneratePayLinkSerializer(serializers.Serializer):
-    order_id = serializers.IntegerField()
-    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
-
-class GeneratePayLinkAPIView(APIView):
+# https://36d0-82-215-100-34.ngrok-free.app/orders/send-check/?order_id=999&amount=1000
+class SendCheckView(View):
     def post(self, request, *args, **kwargs):
-
-        # Validate the incoming data
-        serializer = GeneratePayLinkSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        order_id = serializer.validated_data['order_id']
-        amount = serializer.validated_data['amount']
-
-        # Create the payload for Payme API
-        payload = {
-            'merchant_id': settings.PAYME_MERCHANT_ID,
-            'order_id': order_id,
-            'amount': str(amount),  # Convert to string if necessary
-            'return_url': 'http://127.0.0.1:8000/payment-return/',
-            'callback_url': 'https://b4fa-82-215-100-34.ngrok-free.app/payment-callback/',
-        }
-        try:
-            # Make a request to the Payme API
-            response = requests.post(f'{settings.PAYME_URL}/create', json=payload)
-            response.raise_for_status()  # Raises an error for HTTP 4XX/5XX responses
-
-            result = response.json()
-            if result.get('status') == 'success':
-                return Response({"pay_link": result.get('pay_link')}, status=status.HTTP_200_OK)
-            else:
-                return Response({"error": result.get('message', 'Failed to generate payment link')}, status=status.HTTP_400_BAD_REQUEST)
-        except requests.exceptions.RequestException as e:
-            return Response({"error": f"Error communicating with Payme: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-@csrf_exempt
-def payme_payment(request):
-    if request.method == "POST":
+        # Параметры для отправки чека
         order_id = request.POST.get('order_id')
         amount = request.POST.get('amount')
+        # Формируем URL для запроса
+        payme_url = f'{settings.PAYME_URL}/create'
 
-        # Payme.uz tomonidan talab qilingan sha256 hashingni yaratish
-        merchant_key = settings.PAYME_MERCHANT_KEY
-        token = hashlib.sha256((order_id + amount + merchant_key).encode('utf-8')).hexdigest()
+        # Encode credentials properly
+        username = '66cc53408326c8dc50ac7216'  # Replace with actual username
+        password = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'  # Replace with actual password
+        credentials = f"{username}:{password}"
+        encoded_credentials = base64.b64encode(credentials.encode()).decode()
 
-        # To'lov ma'lumotlari
-        data = {
-            "amount": amount,
-            "order_id": order_id,
-            "merchant_id": settings.PAYME_MERCHANT_ID,
-            "token": token,
+        # Заголовки запроса
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Basic {encoded_credentials}',  # Use encoded credentials
+            # 'Authorization': 'Basic UGF5Y29tOnlvdXJfc2VjcmV0X2tleQ==',  # Replace with your actual encoded credentials
+
         }
+        # Параметры для GET-запроса
+        params = {
+            'm': settings.PAYME_MERCHANT_ID,  # Ваш ID продавца
+            'ac.order_id': order_id,  # Уникальный идентификатор заказа
+            'a': amount,  # Сумма платежа в тийинах
+        }
+        try:
+            # Выполняем запрос к Payme
+            response = requests.get(payme_url, headers=headers, params=params)
+            response.raise_for_status()
 
-        # To'lov so'rovini amalga oshiring
-        return JsonResponse(data)
-    return JsonResponse({'error': 'Only POST method is allowed'})
+            # Возвращаем ответ от Payme
+            return JsonResponse(response.json(), status=response.status_code)
+        except requests.RequestException as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+
+# def create_payment_request(order_id):
+#     # Получаем данные заказа
+#     payment_data = get_order_details(order_id)
+#
+#     # Создаем запрос к платежной системе
+#     response = requests.post("https://api.payme.uz/v1/pay", data=payment_data)
+#
+#     # Обрабатываем ответ
+#     if response.status_code == 200:
+#         # Успешная обработка
+#         return response.json()
+#     else:
+#         # Обработка ошибки
+#         return {"error": "Ошибка платежа"}
+
+
+# @csrf_exempt
+# def process_payment(request):
+#     if request.method == 'POST':
+#         order_id = request.POST.get('order_id')
+#         amount = request.POST.get('amount')
+#
+#         # Логика для обработки платежа
+#         # Пример: отправка данных в платежную систему
+#         payment_data = {
+#             "order_id": order_id,
+#             "amount": amount,
+#         }
+#
+#         # Примерный запрос к платежной системе (должен быть реализован)
+#         response = create_payment_request(order_id)
+#
+#         # Обработка ответа платежной системы
+#         if 'error' in response:
+#             return render(request, 'error.html', {'error': response['error']})
+#         else:
+#             return render(request, 'success.html', {'payment_details': response})
+#
+#     return redirect('home')
 
 
 
+
+
+# class GeneratePayLink:
+#     def __init__(self, order_id, amount):
+#         self.order_id = order_id
+#         self.amount = amount
+#
+#     def generate_link(self):
+#         payload = {
+#             'm': settings.PAYME_MERCHANT_ID,
+#             'ac.order_id': self.order_id,
+#             'a': self.amount,
+#             'c': 'http://127.0.0.1:8000/payment-return/',
+#             'callback_url': 'https://36d0-82-215-100-34.ngrok-free.app/payment-callback/',
+#         }
+#
+#         auth_string = f"{settings.PAYME_MERCHANT_ID}:{settings.PAYME_SECRET_KEY}"
+#         auth_header = base64.b64encode(auth_string.encode()).decode()
+#
+#         headers = {
+#             'Content-Type': 'application/json',
+#             'Authorization': f'Basic UGF5Y29tOlBTMGhiaEtUZzREUnZUZldoRHdLdz9ua25ZNlVReGVNa083cg=='
+#             # 'Authorization': f'Basic {auth_header}'
+#         }
+#
+#         try:
+#             response = requests.post(f'{settings.PAYME_URL}/create', json=payload, headers=headers)
+#             response.raise_for_status()  # Raises an HTTPError for bad responses
+#
+#             result = response.json()
+#             print("Payme API Response:", result)  # Log the response for debugging
+#
+#             if result.get('status') == 'success':
+#                 return result.get('pay_link')
+#             else:
+#                 error_message = result.get('message', 'Failed to generate payment link')
+#                 raise Exception(f"Payme API Error: {error_message}")
+#         except requests.exceptions.RequestException as e:
+#             raise Exception(f'Error communicating with Payme: {e}')
+#         except json.JSONDecodeError as e:
+#             raise Exception(f'Invalid JSON response from Payme: {e}')
+
+
+# def generate_pay_link_view(request):
+#     if request.method == 'POST':
+#         # Get the raw order_id and amount from POST data
+#         order_id_raw = request.POST.get('order_id')
+#         amount = request.POST.get('amount')
+#
+#         # Ensure that order_id is numeric
+#         order_id = re.sub(r'\D', '', order_id_raw)  # Remove all non-numeric characters
+#
+#         if not order_id.isdigit():
+#             return JsonResponse({'error': 'Invalid order ID provided.'}, status=400)
+#
+#         # Convert order_id to integer
+#         order_id = int(order_id)
+#
+#         # Ensure order exists
+#         order = get_object_or_404(Order, id=order_id)
+#
+#         # Generate payment link
+#         pay_link_generator = GeneratePayLink(order_id=order.id, amount=amount)
+#         try:
+#             pay_link = pay_link_generator.generate_link()
+#             return JsonResponse({'pay_link': pay_link})
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=500)
+#
+#     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+# class GeneratePayLinkSerializer(serializers.Serializer):
+#     order_id = serializers.IntegerField()
+#     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+
+# class GeneratePayLinkAPIView(APIView):
+#     def post(self, request, *args, **kwargs):
+#
+#         # Validate the incoming data
+#         serializer = GeneratePayLinkSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#
+#         order_id = serializer.validated_data['order_id']
+#         amount = serializer.validated_data['amount']
+#
+#         # Create the payload for Payme API
+#         payload = {
+#             'm': settings.PAYME_MERCHANT_ID,
+#             'ac.order_id': order_id,
+#             'a': str(amount),  # Convert to string if necessary
+#             'c': 'http://127.0.0.1:8000/payment-return/',
+#             'callback_url': 'https://36d0-82-215-100-34.ngrok-free.app/payment-callback/',
+#         }
+#         try:
+#             # Make a request to the Payme API
+#             response = requests.post(f'{settings.PAYME_URL}/create', json=payload)
+#             response.raise_for_status()  # Raises an error for HTTP 4XX/5XX responses
+#
+#             result = response.json()
+#             if result.get('status') == 'success':
+#                 return Response({"pay_link": result.get('pay_link')}, status=status.HTTP_200_OK)
+#             else:
+#                 return Response({"error": result.get('message', 'Failed to generate payment link')},
+#                                 status=status.HTTP_400_BAD_REQUEST)
+#         except requests.exceptions.RequestException as e:
+#             return Response({"error": f"Error communicating with Payme: {str(e)}"},
+#                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# @csrf_exempt
+# def payme_payment(request):
+#     if request.method == "POST":
+#         order_id = request.POST.get('order_id')
+#         amount = request.POST.get('amount')
+#
+#         # Payme.uz tomonidan talab qilingan sha256 hashingni yaratish
+#         merchant_key = settings.PAYME_MERCHANT_KEY
+#         token = hashlib.sha256((order_id + amount + merchant_key).encode('utf-8')).hexdigest()
+#
+#         # To'lov ma'lumotlari
+#         data = {
+#             "amount": amount,
+#             "order_id": order_id,
+#             "merchant_id": settings.PAYME_MERCHANT_ID,
+#             "token": token,
+#         }
+#
+#         # To'lov so'rovini amalga oshiring
+#         return JsonResponse(data)
+#     return JsonResponse({'error': 'Only POST method is allowed'})
 
 
 # class GeneratePayLinkAPIView(APIView):
@@ -196,10 +302,6 @@ def payme_payment(request):
 #             return JsonResponse({"error": payme_response.get("error", "Payment failed")}, status=400)
 
 
-
-
-
-
 # def payment_view(request, order_id):
 #     try:
 #         # Ensure you use the numeric ID, not the string representation of the Order object
@@ -217,10 +319,6 @@ def payme_payment(request):
 #
 #     except Order.DoesNotExist:
 #         return render(request, 'error.html', {'message': 'Order not found'})
-
-
-
-
 
 
 # def payment_view(request):
@@ -278,7 +376,6 @@ class PaymeCallBackAPIView(MerchantAPIView):
 
     def cancel_transaction(self, order_id, action, *args, **kwargs) -> None:
         print(f"cancel_transaction for order_id: {order_id}, response: {action}")
-
 
 
 def payments(request):

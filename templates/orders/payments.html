@@ -99,42 +99,14 @@
                             <dd class="text-right text-dark b"><strong>{{amount}} sum</strong></dd>
                         </dl>
                         <hr>
-
-
-
-                        <form action="{% url 'generate_pay_link' %}" method="post">
-                            {% csrf_token %}
-                            <!-- Hidden fields for order ID and amount -->
+                        <form action="{% url 'send_check' %}" method="get">
+                            <!-- Скрытые поля для передачи ID заказа и суммы -->
                             <input name="order_id" type="hidden" value="{{ order_id }}">
                             <input name="amount" type="hidden" value="{{ amount }}">
 
-                            <!-- Submit button to trigger the payment -->
-                            <button type="submit">Pay with Payme</button>
+                            <!-- Кнопка для отправки формы -->
+                            <button type="submit">Отправить чек через Payme</button>
                         </form>
-
-                         <form action="{% url 'payme_payment' %}" method="post">
-                            {% csrf_token %}
-                            <!-- Hidden fields for order ID and amount -->
-                            <input name="order_id" type="hidden" value="{{ order_id }}">
-                            <input name="amount" type="hidden" value="{{ amount }}">
-
-                            <!-- Submit button to trigger the payment -->
-                            <button type="submit">Pay with Payme</button>
-                        </form>
-
-
-                        <!--                        &lt;!&ndash; To'lov ma'lumotlarini ko'rsatish &ndash;&gt;-->
-                        <!--                        <div class="payment-info">-->
-                        <!--                            <p><strong>Buyurtma ID:</strong> {{ order_id }}</p>-->
-                        <!--                            <p><strong>To'lov miqdori:</strong> {{ amount }} UZS</p>-->
-                        <!--                        </div>-->
-
-                        <!--                        &lt;!&ndash; To'lov linkini ko'rsatish &ndash;&gt;-->
-                        <!--                        <div class="payment-link">-->
-                        <!--                            <p>To'lovni amalga oshirish uchun quyidagi tugmani bosing:</p>-->
-                        <!--                            <a class="pay-button" href="{{ pay_link }}" target="_blank">To'lovni amalga oshirish</a>-->
-                        <!--                        </div>-->
-
 
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
