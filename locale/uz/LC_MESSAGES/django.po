@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 17:32+0500\n"
+"POT-Creation-Date: 2024-09-13 11:40+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\accounts\models.py:77 .\accounts\models.py:78
+msgid "Account"
+msgstr ""
+
+#: .\category\models.py:17
+#, fuzzy
+#| msgid "Категории"
+msgid "Категория"
+msgstr "Kategoriya"
+
+#: .\category\models.py:18 .\templates\store\store.html:30
+msgid "Категории"
+msgstr "Kategoriya"
+
+#: .\orders\models.py:21
+msgid "Оплата"
+msgstr ""
+
+#: .\orders\models.py:22
+msgid "Оплаты"
+msgstr ""
+
+#: .\orders\models.py:65 .\templates\orders\order_complete.html:48
+msgid "Заказ"
+msgstr "Buyurtma"
+
+#: .\orders\models.py:66
+#, fuzzy
+#| msgid "Заказ"
+msgid "Заказы"
+msgstr "Buyurtma"
+
+#: .\orders\models.py:87
+#, fuzzy
+#| msgid "Обзор продуктов"
+msgid "Заказать продукт"
+msgstr "Mahsulotni ko'rib chiqish"
+
+#: .\orders\models.py:88
+#, fuzzy
+#| msgid "Все продукты"
+msgid "Заказать продукты"
+msgstr "Barcha mahsulotlar"
+
+#: .\store\models.py:43 .\templates\orders\payments.html:38
+#: .\templates\store\cart.html:24 .\templates\store\checkout.html:80
+msgid "Продукт"
+msgstr "Mahsulot"
+
+#: .\store\models.py:44 .\templates\accounts\order_detail.html:52
+#: .\templates\orders\order_complete.html:61
+msgid "Продукты"
+msgstr "Mahsulotlar"
+
+#: .\store\models.py:71
+msgid "Вариант"
+msgstr ""
+
+#: .\store\models.py:72
+msgid "Варианты"
+msgstr ""
+
+#: .\store\models.py:89
+msgid "Рейтинг"
+msgstr ""
+
+#: .\store\models.py:90
+msgid "Отзывы о рейтингах"
+msgstr ""
+
+#: .\store\models.py:104 .\store\models.py:105
+msgid "Галерея товаров"
+msgstr ""
 
 #: .\templates\accounts\account_verification_email.html:3
 #: .\templates\accounts\reset_password_email.html:3
@@ -149,7 +223,7 @@ msgid "Авторизоваться"
 msgstr "Kirish"
 
 #: .\templates\accounts\login.html:23 .\templates\accounts\login.html:39
-#: .\templates\includes\navbar.html:89
+#: .\templates\includes\navbar.html:100
 msgid "Войти"
 msgstr "Kirish"
 
@@ -161,120 +235,118 @@ msgstr "Parolni unutdingizmi"
 
 #: .\templates\accounts\login.html:45
 msgid "Зарегистрируйтесь"
-msgstr ""
+msgstr "Ro'yxatdan o;tish"
 
 #: .\templates\accounts\my_orders.html:15
 msgid "История ваших заказов"
-msgstr ""
+msgstr "Buyurtmalaringiz tarixi"
 
 #: .\templates\accounts\my_orders.html:24
 msgid "Заказ #"
-msgstr ""
+msgstr "Buyurtma #"
 
 #: .\templates\accounts\my_orders.html:25
 msgid "Имя для выставления счета"
-msgstr ""
+msgstr "Hisob nomi"
 
 #: .\templates\accounts\my_orders.html:26
 msgid "Телефон"
-msgstr ""
+msgstr "Telefon"
 
 #: .\templates\accounts\my_orders.html:28
 msgid "Дата"
-msgstr ""
+msgstr "Sana"
 
 #: .\templates\accounts\order_detail.html:25
 msgid "Выставленный счет #"
-msgstr ""
+msgstr "Hisob-faktura #"
 
 #: .\templates\accounts\order_detail.html:39
 msgid "Заказ "
-msgstr ""
+msgstr "Buyurtma "
 
 #: .\templates\accounts\order_detail.html:40
 msgid "Трансакция ID "
-msgstr ""
+msgstr "Tansaksiya ID"
 
 #: .\templates\accounts\order_detail.html:41
 msgid "Дата заказа: "
-msgstr ""
+msgstr "Buyurtma sanasi:"
 
 #: .\templates\accounts\order_detail.html:42
 msgid "Статус: "
-msgstr ""
-
-#: .\templates\accounts\order_detail.html:52
-#: .\templates\orders\order_complete.html:61
-msgid "Продукты"
-msgstr ""
+msgstr "Holat: "
 
 #: .\templates\accounts\order_detail.html:53
 #: .\templates\orders\order_complete.html:62
 msgid "Кол-во"
-msgstr ""
+msgstr "Soni"
 
 #: .\templates\accounts\order_detail.html:54
 #: .\templates\orders\order_complete.html:63
 msgid "Общая сумма"
-msgstr ""
+msgstr "Umumiy narx"
 
 #: .\templates\accounts\order_detail.html:76
 #: .\templates\orders\order_complete.html:85
 msgid "Подытог:"
-msgstr ""
+msgstr "Umumiy narx"
 
 #: .\templates\accounts\order_detail.html:80
 #: .\templates\orders\order_complete.html:89
 #: .\templates\orders\payments.html:95 .\templates\orders\payments.html:134
 #: .\templates\store\cart.html:95
 msgid "Налог:"
-msgstr ""
+msgstr "Soliq:"
 
 #: .\templates\accounts\order_detail.html:85
 #: .\templates\orders\order_complete.html:94
 #: .\templates\orders\payments.html:99 .\templates\orders\payments.html:138
 #: .\templates\store\cart.html:99
 msgid "Общая сумма:"
-msgstr ""
+msgstr "Umumiy summa:"
 
 #: .\templates\accounts\order_detail.html:93
 #: .\templates\orders\order_complete.html:102
 msgid "Спасибо вам за покупки вместе с нами!"
-msgstr ""
+msgstr "Biz bilan xarid qilganingiz uchun tashakkur!"
 
 #: .\templates\accounts\resetPassword.html:15
 msgid "Сброс пароля"
-msgstr ""
+msgstr "Parolni tiklash"
 
 #: .\templates\accounts\resetPassword.html:28
 msgid "Сброс"
-msgstr ""
+msgstr "Qayta tiklash"
 
 #: .\templates\accounts\reset_password_email.html:5
 msgid ""
 "В соответствии с вашим запросом, пожалуйста, нажмите на ссылку ниже, чтобы "
 "сбросить свой пароль."
 msgstr ""
+"Sizning so'rovingizga ko'ra, iltimos, quyidagi havolani bosing parolingizni "
+"tiklash."
 
 #: .\templates\accounts\reset_password_email.html:8
 msgid "Если вы думаете, что это не вы, пожалуйста, проигнорируйте это письмо."
 msgstr ""
+"Agar bu siz emas deb o'ylasangiz, iltimos, ushbu xatni e'tiborsiz qoldiring."
 
-#: .\templates\base.html:11
+#: .\templates\base.html:12
 msgid "ABMA SHOP | Одна из крупнейших платформ для онлайн-покупок"
-msgstr ""
+msgstr "AB&MA SHOP / onlayn xarid qilish platformalaridan biri"
 
 #: .\templates\error.html:7
 msgid "Ошибка"
-msgstr ""
+msgstr "Xato"
 
 #: .\templates\error.html:12
 msgid "Произошла ошибка"
-msgstr ""
+msgstr "Xato yuz berdi"
 
 #: .\templates\error.html:14
 msgid "Вернуться на главную страницу"
-msgstr ""
+msgstr "Bosh sahifaga qaytish"
 
 #: .\templates\home.html:23
 msgid "Посмотреть все"
@@ -294,7 +366,7 @@ msgstr "Xatolik"
 
 #: .\templates\includes\dashboard_sidebar.html:5
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Kabinet"
 
 #: .\templates\includes\dashboard_sidebar.html:6
 msgid "Мои заказы"
@@ -312,111 +384,106 @@ msgstr "Parolni o'zgartiring"
 msgid "Выйти"
 msgstr "Chiqish"
 
-#: .\templates\includes\navbar.html:58
+#: .\templates\includes\navbar.html:69
 msgid "Все категории"
 msgstr "Mahsulotlar"
 
-#: .\templates\includes\navbar.html:61
+#: .\templates\includes\navbar.html:72
 #, fuzzy
 #| msgid "Все продукты"
 msgid "Все продукты "
 msgstr "Barcha mahsulotlar"
 
-#: .\templates\includes\navbar.html:68
+#: .\templates\includes\navbar.html:79
 msgid "Магазин"
 msgstr "Do'kon"
 
-#: .\templates\includes\navbar.html:87
+#: .\templates\includes\navbar.html:83
+msgid "Поиск"
+msgstr "Qidiruv"
+
+#: .\templates\includes\navbar.html:98
 msgid "Желанный гость!"
 msgstr "Xush kelibsiz mehmon!"
 
-#: .\templates\includes\navbar.html:90
+#: .\templates\includes\navbar.html:101
 msgid "Зарегистрировать"
-msgstr ""
+msgstr "Ro'yxatdan o'tish"
 
-#: .\templates\includes\navbar.html:95
+#: .\templates\includes\navbar.html:106
 msgid "Добро пожаловать"
-msgstr ""
+msgstr "Xush kelibsiz "
 
-#: .\templates\includes\navbar.html:98
+#: .\templates\includes\navbar.html:109
 msgid "Выход"
-msgstr ""
+msgstr "Chiqish"
 
 #: .\templates\orders\order_complete.html:9
 msgid "Платеж прошел успешно"
-msgstr ""
+msgstr "To'lov muvaffaqiyatli bo'ldi"
 
-#: .\templates\orders\order_complete.html:12
-msgid "Ходите по магазинам больше"
-msgstr ""
+#: .\templates\orders\order_complete.html:12 .\templates\store\cart.html:107
+msgid "Покупка"
+msgstr "Xarid qilish"
 
 #: .\templates\orders\order_complete.html:34
 msgid "Выставленный счет"
-msgstr ""
-
-#: .\templates\orders\order_complete.html:48
-msgid "Заказ"
-msgstr ""
+msgstr "Hisob-faktura"
 
 #: .\templates\orders\order_complete.html:49
 msgid "Трансакция ID"
-msgstr ""
+msgstr "Bitim ID raqami"
 
 #: .\templates\orders\order_complete.html:50
 msgid "Дата заказа:"
-msgstr ""
+msgstr "Buyurtma sanasi:"
 
 #: .\templates\orders\order_complete.html:51
 msgid "Статус:"
-msgstr ""
+msgstr "Holati:"
 
 #: .\templates\orders\order_recieved_email.html:5
 msgid "ВАШ ЗАКАЗ ПОЛУЧЕН"
-msgstr ""
+msgstr "SIZNING BUYURTMANGIZ QABUL QILINDI"
 
 #: .\templates\orders\order_recieved_email.html:7
 msgid "Номер заказа:"
-msgstr ""
+msgstr "Buyurtma raqami:"
 
 #: .\templates\orders\payments.html:8 .\templates\orders\payments.html:123
 msgid "Просмотрите Ваш заказ и произведите оплату"
-msgstr ""
+msgstr "Buyurtmangizni ko'rib chiqing va to'lovni amalga oshiring"
 
 #: .\templates\orders\payments.html:12 .\templates\store\checkout.html:16
 msgid "Платежный адрес"
-msgstr ""
+msgstr "To'lov manzili"
 
 #: .\templates\orders\payments.html:21
 msgid "Примечание к заказу:"
-msgstr ""
+msgstr "Buyurtma uchun eslatma:"
 
 #: .\templates\orders\payments.html:33
 msgid "Обзор продуктов"
-msgstr ""
-
-#: .\templates\orders\payments.html:38 .\templates\store\cart.html:24
-#: .\templates\store\checkout.html:80
-msgid "Продукт"
-msgstr ""
+msgstr "Mahsulotni ko'rib chiqish"
 
 #: .\templates\orders\payments.html:39 .\templates\store\cart.html:25
 #: .\templates\store\checkout.html:81
 msgid "Количество"
-msgstr ""
+msgstr "Miqdori"
 
 #: .\templates\orders\payments.html:40 .\templates\store\cart.html:26
 #: .\templates\store\checkout.html:82
 msgid "Цена"
-msgstr ""
+msgstr "Narx"
 
 #: .\templates\orders\payments.html:72
 msgid "сум каждый"
-msgstr ""
+msgstr "Sum har biriga"
 
 #: .\templates\orders\payments.html:91 .\templates\orders\payments.html:130
 #: .\templates\store\cart.html:91
 msgid "Итоговая цена:"
-msgstr ""
+msgstr "Yakuniy narx:"
 
 #: .\templates\orders\payments.html:109
 #, fuzzy
@@ -438,11 +505,7 @@ msgstr "So'm har biri"
 
 #: .\templates\store\cart.html:106
 msgid "Проверка"
-msgstr "Проверка"
-
-#: .\templates\store\cart.html:107
-msgid "Продолжайте ходить по магазинам"
-msgstr ""
+msgstr "Tekshirish"
 
 #: .\templates\store\checkout.html:31
 msgid "Email"
@@ -530,10 +593,6 @@ msgstr "Qidiruv natijasi"
 msgid "Наш магазин"
 msgstr "Online do'konimiz"
 
-#: .\templates\store\store.html:30
-msgid "Категории"
-msgstr "Kategoriya"
-
 #: .\templates\store\store.html:37
 msgid "Все продукты"
 msgstr "Barcha mahsulotlar"
@@ -585,6 +644,9 @@ msgstr "Oldingi"
 #: .\templates\store\store.html:180 .\templates\store\store.html:182
 msgid "Следующий"
 msgstr "Keyingi"
+
+#~ msgid "Покупать"
+#~ msgstr "Sotib olish"
 
 #~ msgid "Russian"
 #~ msgstr "Russian"

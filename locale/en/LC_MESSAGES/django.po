@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 15:33+0500\n"
+"POT-Creation-Date: 2024-09-13 11:40+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\models.py:77 .\accounts\models.py:78
+msgid "Account"
+msgstr ""
+
+#: .\category\models.py:17
+msgid "Категория"
+msgstr ""
+
+#: .\category\models.py:18 .\templates\store\store.html:30
+msgid "Категории"
+msgstr ""
+
+#: .\orders\models.py:21
+msgid "Оплата"
+msgstr ""
+
+#: .\orders\models.py:22
+msgid "Оплаты"
+msgstr ""
+
+#: .\orders\models.py:65 .\templates\orders\order_complete.html:48
+msgid "Заказ"
+msgstr ""
+
+#: .\orders\models.py:66
+#, fuzzy
+#| msgid "Заказ "
+msgid "Заказы"
+msgstr "Order"
+
+#: .\orders\models.py:87
+#, fuzzy
+#| msgid "Лучшие продукты"
+msgid "Заказать продукт"
+msgstr "Top products"
+
+#: .\orders\models.py:88
+#, fuzzy
+#| msgid "Лучшие продукты"
+msgid "Заказать продукты"
+msgstr "Top products"
+
+#: .\store\models.py:43 .\templates\orders\payments.html:38
+#: .\templates\store\cart.html:24 .\templates\store\checkout.html:80
+msgid "Продукт"
+msgstr ""
+
+#: .\store\models.py:44 .\templates\accounts\order_detail.html:52
+#: .\templates\orders\order_complete.html:61
+msgid "Продукты"
+msgstr "Products"
+
+#: .\store\models.py:71
+msgid "Вариант"
+msgstr ""
+
+#: .\store\models.py:72
+msgid "Варианты"
+msgstr ""
+
+#: .\store\models.py:89
+msgid "Рейтинг"
+msgstr ""
+
+#: .\store\models.py:90
+msgid "Отзывы о рейтингах"
+msgstr ""
+
+#: .\store\models.py:104 .\store\models.py:105
+msgid "Галерея товаров"
+msgstr ""
+
 #: .\templates\accounts\account_verification_email.html:3
 #: .\templates\accounts\reset_password_email.html:3
 #: .\templates\orders\order_recieved_email.html:3
@@ -145,7 +218,7 @@ msgid "Авторизоваться"
 msgstr ""
 
 #: .\templates\accounts\login.html:23 .\templates\accounts\login.html:39
-#: .\templates\includes\navbar.html:89
+#: .\templates\includes\navbar.html:100
 msgid "Войти"
 msgstr "Log in"
 
@@ -196,11 +269,6 @@ msgstr "Order date:"
 #: .\templates\accounts\order_detail.html:42
 msgid "Статус: "
 msgstr "Status:"
-
-#: .\templates\accounts\order_detail.html:52
-#: .\templates\orders\order_complete.html:61
-msgid "Продукты"
-msgstr "Products"
 
 #: .\templates\accounts\order_detail.html:53
 #: .\templates\orders\order_complete.html:62
@@ -254,7 +322,7 @@ msgstr ""
 msgid "Если вы думаете, что это не вы, пожалуйста, проигнорируйте это письмо."
 msgstr ""
 
-#: .\templates\base.html:11
+#: .\templates\base.html:12
 msgid "ABMA SHOP | Одна из крупнейших платформ для онлайн-покупок"
 msgstr ""
 
@@ -306,31 +374,35 @@ msgstr ""
 msgid "Выйти"
 msgstr ""
 
-#: .\templates\includes\navbar.html:58
+#: .\templates\includes\navbar.html:69
 msgid "Все категории"
 msgstr ""
 
-#: .\templates\includes\navbar.html:61
+#: .\templates\includes\navbar.html:72
 msgid "Все продукты "
 msgstr ""
 
-#: .\templates\includes\navbar.html:68
+#: .\templates\includes\navbar.html:79
 msgid "Магазин"
 msgstr ""
 
-#: .\templates\includes\navbar.html:87
-msgid "Желанный гость!"
-msgstr ""
-
-#: .\templates\includes\navbar.html:90
-msgid "Зарегистрировать"
-msgstr ""
-
-#: .\templates\includes\navbar.html:95
-msgid "Добро пожаловать"
+#: .\templates\includes\navbar.html:83
+msgid "Поиск"
 msgstr ""
 
 #: .\templates\includes\navbar.html:98
+msgid "Желанный гость!"
+msgstr ""
+
+#: .\templates\includes\navbar.html:101
+msgid "Зарегистрировать"
+msgstr ""
+
+#: .\templates\includes\navbar.html:106
+msgid "Добро пожаловать"
+msgstr ""
+
+#: .\templates\includes\navbar.html:109
 msgid "Выход"
 msgstr ""
 
@@ -338,16 +410,12 @@ msgstr ""
 msgid "Платеж прошел успешно"
 msgstr ""
 
-#: .\templates\orders\order_complete.html:12
-msgid "Ходите по магазинам больше"
+#: .\templates\orders\order_complete.html:12 .\templates\store\cart.html:107
+msgid "Покупка"
 msgstr ""
 
 #: .\templates\orders\order_complete.html:34
 msgid "Выставленный счет"
-msgstr ""
-
-#: .\templates\orders\order_complete.html:48
-msgid "Заказ"
 msgstr ""
 
 #: .\templates\orders\order_complete.html:49
@@ -384,11 +452,6 @@ msgstr ""
 
 #: .\templates\orders\payments.html:33
 msgid "Обзор продуктов"
-msgstr ""
-
-#: .\templates\orders\payments.html:38 .\templates\store\cart.html:24
-#: .\templates\store\checkout.html:80
-msgid "Продукт"
 msgstr ""
 
 #: .\templates\orders\payments.html:39 .\templates\store\cart.html:25
@@ -428,10 +491,6 @@ msgstr ""
 
 #: .\templates\store\cart.html:106
 msgid "Проверка"
-msgstr ""
-
-#: .\templates\store\cart.html:107
-msgid "Продолжайте ходить по магазинам"
 msgstr ""
 
 #: .\templates\store\checkout.html:31
@@ -518,10 +577,6 @@ msgstr ""
 
 #: .\templates\store\store.html:11
 msgid "Наш магазин"
-msgstr ""
-
-#: .\templates\store\store.html:30
-msgid "Категории"
 msgstr ""
 
 #: .\templates\store\store.html:37
