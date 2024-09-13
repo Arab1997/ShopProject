@@ -109,7 +109,7 @@ def login(request):
             except:
                 pass
             auth.login(request, user)
-            messages.success(request, 'You are now logged in.')
+            messages.success(request, 'Теперь вы вошли в систему.')
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
@@ -121,7 +121,7 @@ def login(request):
             except:
                 return redirect('dashboard')
         else:
-            messages.error(request, 'Invalid login credentials')
+            messages.error(request, 'Неверные учетные данные для входа в систему')
             return redirect('login')
     return render(request, 'accounts/login.html')
 
@@ -129,7 +129,7 @@ def login(request):
 @login_required(login_url = 'login')
 def logout(request):
     auth.logout(request)
-    messages.success(request, 'You are logged out.')
+    messages.success(request, 'Вы вышли из системы.')
     return redirect('login')
 
 
@@ -143,10 +143,10 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, 'Congratulations! Your account is activated.')
+        messages.success(request, 'Поздравляю! Ваша учетная запись активирована.')
         return redirect('login')
     else:
-        messages.error(request, 'Invalid activation link')
+        messages.error(request, 'Неверная ссылка для активации')
         return redirect('register')
 
 
@@ -156,6 +156,9 @@ def dashboard(request):
     orders_count = orders.count()
 
     userprofile = UserProfile.objects.get(user_id=request.user.id)
+
+    # user_profile = UserProfile.objects.get(user=request.user)
+
     context = {
         'orders_count': orders_count,
         'userprofile': userprofile,
@@ -171,7 +174,7 @@ def forgotPassword(request):
 
             # Reset password email
             current_site = get_current_site(request)
-            mail_subject = 'Reset Your Password'
+            mail_subject = 'Сбросьте свой пароль'
             message = render_to_string('accounts/reset_password_email.html', {
                 'user': user,
                 'domain': current_site,
@@ -187,16 +190,16 @@ def forgotPassword(request):
                 # Handle the exception (e.g., log the error)
                 print(f"An error occurred: {e}")
 
-            messages.success(request, 'Password reset email has been sent to your email address.')
+            messages.success(request, 'На ваш электронный адрес отправлено электронное письмо для сброса пароля.')
             return redirect('login')
         else:
-            messages.error(request, 'Account does not exist!')
+            messages.error(request, 'Учетная запись не существует!')
             return redirect('forgotPassword')
     return render(request, 'accounts/forgotPassword.html')
 
 def send_welcome_email(email):
-    mail_subject = 'Welcome to Our Platform!'
-    message = 'Thank you for signing up!'
+    mail_subject = 'Добро пожаловать на нашу платформу!'
+    message = 'Спасибо, что зарегистрировались!'
     to_email = email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
@@ -211,10 +214,10 @@ def resetpassword_validate(request, uidb64, token):
 
     if user is not None and default_token_generator.check_token(user, token):
         request.session['uid'] = uid
-        messages.success(request, 'Please reset your password')
+        messages.success(request, 'Пожалуйста, сбросьте свой пароль')
         return redirect('resetPassword')
     else:
-        messages.error(request, 'This link has been expired!')
+        messages.error(request, 'Срок действия этой ссылки истек!')
         return redirect('login')
 
 
@@ -228,10 +231,10 @@ def resetPassword(request):
             user = Account.objects.get(pk=uid)
             user.set_password(password)
             user.save()
-            messages.success(request, 'Password reset successful')
+            messages.success(request, 'Сброс пароля прошел успешно')
             return redirect('login')
         else:
-            messages.error(request, 'Password do not match!')
+            messages.error(request, 'Пароль не совпадает!')
             return redirect('resetPassword')
     else:
         return render(request, 'accounts/resetPassword.html')
@@ -255,7 +258,7 @@ def edit_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile has been updated.')
+            messages.success(request, 'Ваш профиль был обновлен.')
             return redirect('edit_profile')
     else:
         user_form = UserForm(instance=request.user)
@@ -283,13 +286,13 @@ def change_password(request):
                 user.set_password(new_password)
                 user.save()
                 # auth.logout(request)
-                messages.success(request, 'Password updated successfully.')
+                messages.success(request, 'Пароль успешно обновлен.')
                 return redirect('change_password')
             else:
-                messages.error(request, 'Please enter valid current password')
+                messages.error(request, 'Пожалуйста, введите действительный текущий пароль')
                 return redirect('change_password')
         else:
-            messages.error(request, 'Password does not match!')
+            messages.error(request, 'Пароль не совпадает!')
             return redirect('change_password')
     return render(request, 'accounts/change_password.html')
 

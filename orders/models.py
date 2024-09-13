@@ -1,7 +1,7 @@
 from django.db import models
 from accounts.models import Account
 from store.models import Product, Variation
-
+from django.utils.translation import gettext_lazy as _
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
@@ -16,6 +16,10 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.payment_id
+
+    class Meta:
+        verbose_name = _('Оплата')
+        verbose_name_plural = _('Оплаты')
 
 class Order(models.Model):
     STATUS = (
@@ -56,6 +60,10 @@ class Order(models.Model):
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
 
+
+    class Meta:
+        verbose_name = _('Заказ')
+        verbose_name_plural = _('Заказы')
     # def __str__(self):
     #     return f'Order {self.order_id} - {self.status}'
 
@@ -74,3 +82,7 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.product_name
+
+    class Meta:
+        verbose_name = _('Заказать продукт')
+        verbose_name_plural = _('Заказать продукты')

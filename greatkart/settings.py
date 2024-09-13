@@ -10,15 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-from pathlib import Path
-
 import dj_database_url
 from decouple import config
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv(os.path.join(BASE_DIR, "eVar", ".env"))
 
 # Quick-start development settings - unsuitable for production
@@ -47,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
     'category',
     'accounts',
     'store',
@@ -55,8 +52,6 @@ INSTALLED_APPS = [
     'orders',
     'storages',
     'rest_framework',
-    # 'paycomuz',
-    # 'payment',
     'payme',
 ]
 
@@ -64,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,38 +122,37 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru'
+LANGUAGES = [
+    ('ru', 'Russian'),
+    ('uz', 'Uzbek'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'Asia/Tashkent'
-
-USE_I18N = True
-
 USE_TZ = True
+USE_I18N = True
+USE_L10N = True
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),  # Альтернативный способ определения пути
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static')
-    ]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# media files configuration
+# Media files settings
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 from django.contrib.messages import constants as messages
+
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
@@ -172,21 +167,19 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 SERVER_EMAIL = 'maxmudovabdullo97@gmail.com'
 DEFAULT_FROM_EMAIL = 'maxmudovabdullo97@gmail.com'
 
-
- # Replace with your actual merchant ID from Payme
+# Replace with your actual merchant ID from Payme
 PAYME_URL = 'https://checkout.paycom.uz/api'  # Base URL for the Payme API
 PAYME_SECRET_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
 PAYME_MERCHANT_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
 PAYME_API_KEY = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'
 PAYME_MERCHANT_ID = '66cc53408326c8dc50ac7216'  # Replace with your actual merchant ID from Payme
 
-
 PAYME: dict = {
     'PAYME_ID': '66cc53408326c8dc50ac7216',
     'PAYME_KEY': 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r',
     'PAYME_URL': 'https://checkout.test.paycom.uz',
-    'PAYME_CALL_BACK_URL': 'https://36d0-82-215-100-34.ngrok-free.app/payments/merchant/', # merchant api callback url
-    'PAYME_MIN_AMOUNT': 1, # integer field
+    'PAYME_CALL_BACK_URL': 'https://36d0-82-215-100-34.ngrok-free.app/payments/merchant/',  # merchant api callback url
+    'PAYME_MIN_AMOUNT': 1,  # integer field
     'PAYME_ACCOUNT': 'order_id',
 }
 

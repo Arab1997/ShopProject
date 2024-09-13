@@ -3,6 +3,7 @@ from category.models import Category
 from django.urls import reverse
 from accounts.models import Account
 from django.db.models import Avg, Count
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -38,6 +39,10 @@ class Product(models.Model):
             count = int(reviews['count'])
         return count
 
+    class Meta:
+        verbose_name = _('Продукт')
+        verbose_name_plural = _('Продукты')
+
 class VariationManager(models.Manager):
     def colors(self):
         return super(VariationManager, self).filter(variation_category='color', is_active=True)
@@ -62,6 +67,9 @@ class Variation(models.Model):
     def __str__(self):
         return self.variation_value
 
+    class Meta:
+        verbose_name = _('Вариант')
+        verbose_name_plural = _('Варианты')
 
 class ReviewRating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -77,6 +85,9 @@ class ReviewRating(models.Model):
     def __str__(self):
         return self.subject
 
+    class Meta:
+        verbose_name = _('Рейтинг')
+        verbose_name_plural = _('Отзывы о рейтингах')
 
 class ProductGallery(models.Model):
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
@@ -88,3 +99,7 @@ class ProductGallery(models.Model):
     class Meta:
         verbose_name = 'productgallery'
         verbose_name_plural = 'product gallery'
+
+    class Meta:
+        verbose_name = _('Галерея товаров')
+        verbose_name_plural = _('Галерея товаров')

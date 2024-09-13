@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -7,10 +8,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 class MyAccountManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
-            raise ValueError('User must have an email address')
+            raise ValueError('У пользователя должен быть адрес электронной почты')
 
         if not username:
-            raise ValueError('User must have an username')
+            raise ValueError('У пользователя должно быть имя пользователя')
 
         user = self.model(
             email = self.normalize_email(email),
@@ -72,6 +73,9 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, add_label):
         return True
 
+    class Meta:
+        verbose_name = _('Account')
+        verbose_name_plural = _('Account')
 
 class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)

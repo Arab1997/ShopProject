@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 
 
 <div class="container" style="margin-top: 50px;">
     <center><i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
-    <h2 class="text-center">Payment Successful</h2>
+    <h2 class="text-center">{% trans 'Платеж прошел успешно' %}</h2>
 	<br>
 	<div class="text-center">
-		<a href="{% url 'store' %}" class="btn btn-success">Shop more</a>
+		<a href="{% url 'store' %}" class="btn btn-success">{% trans 'Ходите по магазинам больше' %}</a>
 	</div>
 </div>
 
@@ -31,7 +31,7 @@
                             <!-- col-lg-6 start here -->
                             <div class="invoice-from">
                                 <ul class="list-unstyled text-right">
-                                    <li><strong>Invoiced To</strong></li>
+                                    <li><strong>{% trans 'Выставленный счет' %}</strong></li>
                                     <li>{{order.full_name}}</li>
                                     <li>{{order.full_address}}</li>
                                     <li>{{order.city}}, {{order.state}}</li>
@@ -45,10 +45,10 @@
                             <div class="invoice-details mt25">
                                 <div class="well">
                                     <ul class="list-unstyled mb0">
-                                        <li><strong>Order</strong> #{{order_id}}</li>
-                                        <li><strong>Transaction ID</strong> {{transID}}</li>
-                                        <li><strong>Order Date:</strong> {{order.created_at}}</li>
-                                        <li><strong>Status:</strong> {{payment.status}}</li>
+                                        <li><strong>{% trans 'Заказ' %}</strong> #{{order_id}}</li>
+                                        <li><strong>{% trans 'Трансакция ID' %}</strong> {{transID}}</li>
+                                        <li><strong>{% trans 'Дата заказа:' %}</strong> {{order.created_at}}</li>
+                                        <li><strong>{% trans 'Статус:' %}</strong> {{payment.status}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -58,9 +58,9 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="per70 text-center">Products</th>
-                                                <th class="per5 text-center">Qty</th>
-                                                <th class="per25 text-center">Total</th>
+                                                <th class="per70 text-center">{% trans 'Продукты' %}</th>
+                                                <th class="per5 text-center">{% trans 'Кол-во' %}</th>
+                                                <th class="per25 text-center">{% trans 'Общая сумма' %}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,30 +76,30 @@
                                           				</p>
                                                 </td>
                                                 <td class="text-center">{{item.quantity}}</td>
-                                                <td class="text-center">{{item.product_price}} SUM</td>
+                                                <td class="text-center">{{item.product_price}} Sum</td>
                                             </tr>
                                           {% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="2" class="text-right">Sub Total:</th>
+                                                <th colspan="2" class="text-right">{% trans 'Подытог:' %}</th>
                                                 <th class="text-center">{{subtotal}} SUM</th>
                                             </tr>
                                             <tr>
-                                                <th colspan="2" class="text-right">Tax:</th>
+                                                <th colspan="2" class="text-right">{% trans 'Налог:' %}</th>
                                                 <th class="text-center">{{order.tax}} SUM</th>
                                             </tr>
 
                                             <tr>
-                                                <th colspan="2" class="text-right">Grand Total:</th>
-                                                <th class="text-center">{{order.order_total}} SUM</th>
+                                                <th colspan="2" class="text-right">{% trans 'Общая сумма:' %}</th>
+                                                <th class="text-center">{{order.order_total}} Sum</th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                             </div>
                             <div class="invoice-footer mt25">
-                                <p class="text-center">Thank you for shopping with us!</p>
+                                <p class="text-center">{% trans 'Спасибо вам за покупки вместе с нами!' %}</p>
                             </div>
                         </div>
                         <!-- col-lg-12 end here -->

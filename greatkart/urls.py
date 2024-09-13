@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -22,19 +23,22 @@ from orders.views import PaymeCallBackAPIView
 from . import views
 
 urlpatterns = [
-                  path('securelogin/', admin.site.urls),
-                  path('', views.home, name='home'),
-                  path('store/', include('store.urls')),
-                  path('cart/', include('carts.urls')),
-                  path('accounts/', include('accounts.urls')),
+    path('securelogin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('store/', include('store.urls')),
+    path('cart/', include('carts.urls')),
+    path('accounts/', include('accounts.urls')),
+    # payme pkg
+    path('payments/merchant/', PaymeCallBackAPIView.as_view()),  # call back for merchant transactions
+    # ORDERS
+    path('orders/', include('orders.urls')),
+]
 
-                  # # paycomuz
-                  # path('payment/', include('orders.urls')),
+urlpatterns += i18n_patterns(
+    path('set_language/', include('django.conf.urls.i18n')),
+    # Your multilingual URLs
 
-                  # payme pkg
-                  path('payments/merchant/', PaymeCallBackAPIView.as_view()),  # call back for merchant transactions
+)
 
-                  # ORDERS
-                  path('orders/', include('orders.urls')),
-                  # path('orders/', include('orders.urls', namespace='orders')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

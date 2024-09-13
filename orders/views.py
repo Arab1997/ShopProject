@@ -69,7 +69,10 @@ class SendCheckView(View):
         payme_url = f'{settings.PAYME_URL}/create'
 
         # Encode credentials properly
-        username = '66cc53408326c8dc50ac7216'  # Replace with actual username
+        # username = '66cc53408326c8dc50ac7216'  # Replace with actual username
+        # password = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'  # Replace with actual password
+
+        username = 'Paycom'  # Replace with actual username
         password = 'PS0hbhKTg4DRvTfWhDwKw?nknY6UQxeMkO7r'  # Replace with actual password
         credentials = f"{username}:{password}"
         encoded_credentials = base64.b64encode(credentials.encode()).decode()
@@ -427,7 +430,7 @@ def payments(request):
     CartItem.objects.filter(user=request.user).delete()
 
     # Send order recieved email to customer
-    mail_subject = 'Thank you for your order!'
+    mail_subject = 'Спасибо вам за ваш заказ!'
     message = render_to_string('orders/order_recieved_email.html', {
         'user': request.user,
         'order': order,

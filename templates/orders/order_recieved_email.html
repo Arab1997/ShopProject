@@ -1,9 +1,9 @@
 {% autoescape off %}
+{% load i18n %}
+{% trans 'Привет' %}{{user.first_name}},
 
-Hi {{user.first_name}},
+{% trans 'ВАШ ЗАКАЗ ПОЛУЧЕН' %}
 
-YOUR ORDER HAS BEEN RECIEVED
-
-Order Number: {{order.order_id}}
+{% trans 'Номер заказа:' %}{{order.order_id}}
 
 {% endautoescape %}

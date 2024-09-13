@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 	<main class="col-md-9">
 		<article class="card">
 		<header class="card-header">
-			<strong class="d-inline-block mr-3">Logged in as:</strong>
+			<strong class="d-inline-block mr-3">{% trans 'Вошел в систему как:' %}</strong>
 			<span>{{user.full_name}}</span>
 		</header>
 		<div class="card-body">
@@ -22,9 +22,9 @@
 			<div class="col-md-6">
 				<div class="card" style="text-align:center;">
 					<div class="card-body">
-						<h5 class="card-title">Total Orders</h5>
+						<h5 class="card-title">{% trans 'Общее количество заказов' %}</h5>
 						<h4>{{orders_count}}</h4>
-						<a href="{% url 'my_orders' %}">View Orders</a>
+						<a href="{% url 'my_orders' %}">{% trans 'Просмотр заказов' %}</a>
 					</div>
 				</div>
 			</div>

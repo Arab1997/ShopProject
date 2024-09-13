@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg">
 <div class="container">
 	{% if 'search' in request.path %}
-		<h2 class="title-page">Search Result</h2>
+		<h2 class="title-page">{% trans 'Результат поиска' %}</h2>
 	{% else %}
-		<h2 class="title-page">Our Store</h2>
+		<h2 class="title-page">{% trans 'Наш магазин' %}</h2>
 	{% endif %}
 
 </div> <!-- container //  -->
@@ -27,14 +27,14 @@
 		<header class="card-header">
 			<a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
 				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Categories</h6>
+				<h6 class="title">{% trans 'Категории' %}</h6>
 			</a>
 		</header>
 		<div class="filter-content collapse show" id="collapse_1" style="">
 			<div class="card-body">
 
 				<ul class="list-menu">
-					<li><a href="{% url 'store' %}">All Products  </a></li>
+					<li><a href="{% url 'store' %}">{% trans 'Все продукты' %}</a></li>
 					{% for category in links %}
 				<li><a href="{{ category.get_url }}">{{ category.category_name }}  </a></li>
 					{% endfor %}
@@ -47,24 +47,24 @@
 		<header class="card-header">
 			<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
 				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Sizes </h6>
+				<h6 class="title">{% trans 'Размеры' %} </h6>
 			</a>
 		</header>
 		<div class="filter-content collapse show" id="collapse_4" style="">
 			<div class="card-body">
 			  <label class="checkbox-btn">
 			    <input type="checkbox">
-			    <span class="btn btn-light"> XS </span>
+			    <span class="btn btn-light">{% trans 'Маленький' %} </span>
 			  </label>
 
 			  <label class="checkbox-btn">
 			    <input type="checkbox">
-			    <span class="btn btn-light"> SM </span>
+			    <span class="btn btn-light"> {% trans 'Маленький' %} </span>
 			  </label>
 
 			  <label class="checkbox-btn">
 			    <input type="checkbox">
-			    <span class="btn btn-light"> LG </span>
+			    <span class="btn btn-light"> {% trans 'Большой' %} </span>
 			  </label>
 
 			  <label class="checkbox-btn">
@@ -79,7 +79,7 @@
 		<header class="card-header">
 			<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
 				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Price range </h6>
+				<h6 class="title">{% trans 'Диапазон цен' %} </h6>
 			</a>
 		</header>
 		<div class="filter-content collapse show" id="collapse_3" style="">
@@ -87,32 +87,32 @@
 
 				<div class="form-row">
 				<div class="form-group col-md-6">
-				  <label>Min</label>
+				  <label>{% trans 'Минимум' %}</label>
 				  <!-- <input class="form-control" placeholder="0" type="number"> -->
 				  	<select class="mr-2 form-control">
-						<option value="0">0 SUM</option>
-						<option value="50">50 SUM</option>
-						<option value="100">100 SUM</option>
-						<option value="150">150 SUM</option>
-						<option value="200">200 SUM</option>
-						<option value="500">500 SUM</option>
-						<option value="1000">1000 SUM</option>
+						<option value="0">0 Сум</option>
+						<option value="50">50 Сум</option>
+						<option value="100">100 Сум</option>
+						<option value="150">150 Сум</option>
+						<option value="200">200 Сум</option>
+						<option value="500">500 Сум</option>
+						<option value="1000">1000 Сум</option>
 					</select>
 				</div>
 				<div class="form-group text-right col-md-6">
-				  <label>Max</label>
+				  <label>{% trans 'Максимум' %}</label>
 				  	<select class="mr-2 form-control">
-						<option value="50">50 SUM</option>
-						<option value="100">100 SUM</option>
-						<option value="150">150 SUM</option>
-						<option value="200">200 SUM</option>
-						<option value="500">500 SUM</option>
-						<option value="1000">1000 SUM</option>
-						<option value="2000">2000+ SUM</option>
+						<option value="50">50 Сум</option>
+						<option value="100">100 Сум</option>
+						<option value="150">150 Сум</option>
+						<option value="200">200 Сум</option>
+						<option value="500">500 Сум</option>
+						<option value="1000">1000 Сум</option>
+						<option value="2000">2000+ Сум</option>
 					</select>
 				</div>
 				</div> <!-- form-row.// -->
-				<button class="btn btn-block btn-primary">Apply</button>
+				<button class="btn btn-block btn-primary">{% trans 'Применить' %}</button>
 			</div><!-- card-body.// -->
 		</div>
 	</article> <!-- filter-group .// -->
@@ -124,7 +124,7 @@
 
 <header class="border-bottom mb-4 pb-3">
 		<div class="form-inline">
-			<span class="mr-md-auto"><b>{{ product_count }}</b> items found </span>
+			<span class="mr-md-auto"><b>{{ product_count }}</b>{% trans 'Найденные предметы' %}  </span>
 
 		</div>
 </header><!-- sect-heading -->
@@ -143,17 +143,17 @@
 				<div class="fix-height">
 					<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
 					<div class="price-wrap mt-2">
-						<span class="price">{{ product.price }} SUM</span>
+						<span class="price">{{ product.price }} Сум</span>
 					</div> <!-- price-wrap.// -->
 				</div>
-				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details </a>
+				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">{% trans 'Просмотр подробной инфо' %} </a>
 			</figcaption>
 		</figure>
 	</div> <!-- col.// -->
 	{% endfor %}
 	{% else %}
 	<div>
-		<h2>No result found. Please try again.</h2>
+		<h2>{% trans 'Результат не найден. Пожалуйста, попробуйте снова.' %}</h2>
 	</div>
 	{% endif %}
 </div> <!-- row end.// -->
@@ -163,9 +163,9 @@
 	{% if products.has_other_pages %}
 	  <ul class="pagination">
 			{% if products.has_previous %}
-	    <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
+	    <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">{% trans 'Предыдущий' %}</a></li>
 			{% else %}
-			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+			<li class="page-item disabled"><a class="page-link" href="#">{% trans 'Предыдущий' %}</a></li>
 			{% endif %}
 
 			{% for i in products.paginator.page_range %}
@@ -177,9 +177,9 @@
 	    {% endfor %}
 
 			{% if products.has_next %}
-	    	<li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
+	    	<li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">{% trans 'Следующий' %}</a></li>
 			{% else %}
-				<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+				<li class="page-item disabled"><a class="page-link" href="#">{% trans 'Следующий' %}</a></li>
 			{% endif %}
 	  </ul>
 	{% endif %}

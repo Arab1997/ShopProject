@@ -1,6 +1,0 @@
-<form action="{% url 'payme_payment' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="order_id" value="{{ order.id }}">
-    <input type="text" name="amount" placeholder="To'lov miqdori">
-    <button type="submit">Payme orqali to'lash</button>
-</form>

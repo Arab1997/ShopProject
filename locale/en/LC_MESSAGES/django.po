@@ -1,0 +1,577 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-12 15:33+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\templates\accounts\account_verification_email.html:3
+#: .\templates\accounts\reset_password_email.html:3
+#: .\templates\orders\order_recieved_email.html:3
+msgid "Привет"
+msgstr ""
+
+#: .\templates\accounts\account_verification_email.html:5
+msgid ""
+"Пожалуйста, нажмите на ссылку ниже, чтобы подтвердить свою регистрацию.:"
+msgstr ""
+
+#: .\templates\accounts\account_verification_email.html:8
+msgid "Если вы думаете, что это не вы, пожалуйста, проигнорируйте это письмо.:"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:15
+msgid "Измените Свой пароль"
+msgstr "Change Your password"
+
+#: .\templates\accounts\change_password.html:25
+msgid "Текущий пароль"
+msgstr "Current password"
+
+#: .\templates\accounts\change_password.html:29
+msgid "Создайте новый пароль"
+msgstr "Create a new password"
+
+#: .\templates\accounts\change_password.html:33
+msgid "Подтвердите новый пароль"
+msgstr "Confirm the new password"
+
+#: .\templates\accounts\dashboard.html:16
+msgid "Вошел в систему как:"
+msgstr "Logged in as:"
+
+#: .\templates\accounts\dashboard.html:25
+#: .\templates\accounts\my_orders.html:27
+msgid "Общее количество заказов"
+msgstr "Total number of orders"
+
+#: .\templates\accounts\dashboard.html:27
+msgid "Просмотр заказов"
+msgstr "Viewing orders"
+
+#: .\templates\accounts\edit_profile.html:15
+msgid "Отредактируйте свой профиль"
+msgstr "Edit your profile"
+
+#: .\templates\accounts\edit_profile.html:35 .\templates\store\checkout.html:21
+msgid "Имя"
+msgstr "Name"
+
+#: .\templates\accounts\edit_profile.html:39 .\templates\store\checkout.html:25
+msgid "Фамилия"
+msgstr "Surname"
+
+#: .\templates\accounts\edit_profile.html:45 .\templates\store\checkout.html:35
+msgid "Номер телефона"
+msgstr "Phone number"
+
+#: .\templates\accounts\edit_profile.html:49
+msgid "Фотография профиля"
+msgstr "Profile picture"
+
+#: .\templates\accounts\edit_profile.html:54
+msgid "адресная строка 1"
+msgstr "address line"
+
+#: .\templates\accounts\edit_profile.html:58
+msgid "Адресная строка 2"
+msgstr "Address bar 2"
+
+#: .\templates\accounts\edit_profile.html:63 .\templates\store\checkout.html:51
+msgid "Город"
+msgstr "City"
+
+#: .\templates\accounts\edit_profile.html:67
+msgid "Государство"
+msgstr "State"
+
+#: .\templates\accounts\edit_profile.html:71 .\templates\store\checkout.html:59
+msgid "Страна"
+msgstr "A country"
+
+#: .\templates\accounts\forgotPassword.html:15
+msgid "Забыли пароль"
+msgstr "Forgot your password"
+
+#: .\templates\accounts\forgotPassword.html:24
+msgid "У тебя есть пароль? Авторизоваться"
+msgstr "Do you have a password? Log in"
+
+#: .\templates\accounts\forgotPassword.html:28
+msgid "Представить"
+msgstr "submit"
+
+#: .\templates\accounts\forgotPassword.html:34
+#: .\templates\accounts\login.html:45
+#: .\templates\accounts\resetPassword.html:34
+msgid "У вас нет учетной записи?"
+msgstr "Don't you have an account?"
+
+#: .\templates\accounts\forgotPassword.html:34
+#: .\templates\accounts\register.html:12 .\templates\accounts\register.html:19
+#: .\templates\accounts\register.html:23 .\templates\accounts\register.html:31
+#: .\templates\accounts\register.html:35 .\templates\accounts\register.html:41
+#: .\templates\accounts\register.html:45 .\templates\accounts\register.html:50
+#: .\templates\accounts\register.html:57
+#: .\templates\accounts\resetPassword.html:34
+#: .\templates\accounts\reset_password_email.html:5
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+#: .\templates\accounts\login.html:13
+msgid ""
+"Благодарим вас за регистрацию у нас. Мы отправили вам электронное письмо с "
+"подтверждением на ваш электронный адрес"
+msgstr ""
+
+#: .\templates\accounts\login.html:15
+msgid "Уже проверено?"
+msgstr ""
+
+#: .\templates\accounts\login.html:15
+msgid "Авторизоваться"
+msgstr ""
+
+#: .\templates\accounts\login.html:23 .\templates\accounts\login.html:39
+#: .\templates\includes\navbar.html:89
+msgid "Войти"
+msgstr "Log in"
+
+#: .\templates\accounts\login.html:35
+msgid "Забыли пароль?"
+msgstr "Forgot your password?"
+
+#: .\templates\accounts\login.html:45
+msgid "Зарегистрируйтесь"
+msgstr "Register"
+
+#: .\templates\accounts\my_orders.html:15
+msgid "История ваших заказов"
+msgstr "Your order history"
+
+#: .\templates\accounts\my_orders.html:24
+msgid "Заказ #"
+msgstr "Order #"
+
+#: .\templates\accounts\my_orders.html:25
+msgid "Имя для выставления счета"
+msgstr "Billing name"
+
+#: .\templates\accounts\my_orders.html:26
+msgid "Телефон"
+msgstr "Phone"
+
+#: .\templates\accounts\my_orders.html:28
+msgid "Дата"
+msgstr "Date"
+
+#: .\templates\accounts\order_detail.html:25
+msgid "Выставленный счет #"
+msgstr "Invoice #"
+
+#: .\templates\accounts\order_detail.html:39
+msgid "Заказ "
+msgstr "Order"
+
+#: .\templates\accounts\order_detail.html:40
+msgid "Трансакция ID "
+msgstr "Transaction ID"
+
+#: .\templates\accounts\order_detail.html:41
+msgid "Дата заказа: "
+msgstr "Order date:"
+
+#: .\templates\accounts\order_detail.html:42
+msgid "Статус: "
+msgstr "Status:"
+
+#: .\templates\accounts\order_detail.html:52
+#: .\templates\orders\order_complete.html:61
+msgid "Продукты"
+msgstr "Products"
+
+#: .\templates\accounts\order_detail.html:53
+#: .\templates\orders\order_complete.html:62
+msgid "Кол-во"
+msgstr "Quantity"
+
+#: .\templates\accounts\order_detail.html:54
+#: .\templates\orders\order_complete.html:63
+msgid "Общая сумма"
+msgstr "Total amount"
+
+#: .\templates\accounts\order_detail.html:76
+#: .\templates\orders\order_complete.html:85
+msgid "Подытог:"
+msgstr "Summary:"
+
+#: .\templates\accounts\order_detail.html:80
+#: .\templates\orders\order_complete.html:89
+#: .\templates\orders\payments.html:95 .\templates\orders\payments.html:134
+#: .\templates\store\cart.html:95
+msgid "Налог:"
+msgstr "Tax:"
+
+#: .\templates\accounts\order_detail.html:85
+#: .\templates\orders\order_complete.html:94
+#: .\templates\orders\payments.html:99 .\templates\orders\payments.html:138
+#: .\templates\store\cart.html:99
+msgid "Общая сумма:"
+msgstr "Total amount:"
+
+#: .\templates\accounts\order_detail.html:93
+#: .\templates\orders\order_complete.html:102
+msgid "Спасибо вам за покупки вместе с нами!"
+msgstr "Thank you for shopping with us!"
+
+#: .\templates\accounts\resetPassword.html:15
+msgid "Сброс пароля"
+msgstr "Password Reset"
+
+#: .\templates\accounts\resetPassword.html:28
+msgid "Сброс"
+msgstr "Reset"
+
+#: .\templates\accounts\reset_password_email.html:5
+msgid ""
+"В соответствии с вашим запросом, пожалуйста, нажмите на ссылку ниже, чтобы "
+"сбросить свой пароль."
+msgstr ""
+
+#: .\templates\accounts\reset_password_email.html:8
+msgid "Если вы думаете, что это не вы, пожалуйста, проигнорируйте это письмо."
+msgstr ""
+
+#: .\templates\base.html:11
+msgid "ABMA SHOP | Одна из крупнейших платформ для онлайн-покупок"
+msgstr ""
+
+#: .\templates\error.html:7
+msgid "Ошибка"
+msgstr "Error"
+
+#: .\templates\error.html:12
+msgid "Произошла ошибка"
+msgstr "Error"
+
+#: .\templates\error.html:14
+msgid "Вернуться на главную страницу"
+msgstr ""
+
+#: .\templates\home.html:23
+msgid "Посмотреть все"
+msgstr "View all"
+
+#: .\templates\home.html:24
+msgid "Лучшие продукты"
+msgstr "Top products"
+
+#: .\templates\home.html:35
+msgid "Сум"
+msgstr "Sum"
+
+#: .\templates\includes\alerts.html:7
+msgid "Ошибка:"
+msgstr "Error"
+
+#: .\templates\includes\dashboard_sidebar.html:5
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\includes\dashboard_sidebar.html:6
+msgid "Мои заказы"
+msgstr ""
+
+#: .\templates\includes\dashboard_sidebar.html:7
+msgid "Редактировать профиль "
+msgstr ""
+
+#: .\templates\includes\dashboard_sidebar.html:8
+msgid "Поменять пароль"
+msgstr ""
+
+#: .\templates\includes\dashboard_sidebar.html:11
+msgid "Выйти"
+msgstr ""
+
+#: .\templates\includes\navbar.html:58
+msgid "Все категории"
+msgstr ""
+
+#: .\templates\includes\navbar.html:61
+msgid "Все продукты "
+msgstr ""
+
+#: .\templates\includes\navbar.html:68
+msgid "Магазин"
+msgstr ""
+
+#: .\templates\includes\navbar.html:87
+msgid "Желанный гость!"
+msgstr ""
+
+#: .\templates\includes\navbar.html:90
+msgid "Зарегистрировать"
+msgstr ""
+
+#: .\templates\includes\navbar.html:95
+msgid "Добро пожаловать"
+msgstr ""
+
+#: .\templates\includes\navbar.html:98
+msgid "Выход"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:9
+msgid "Платеж прошел успешно"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:12
+msgid "Ходите по магазинам больше"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:34
+msgid "Выставленный счет"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:48
+msgid "Заказ"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:49
+msgid "Трансакция ID"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:50
+msgid "Дата заказа:"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:51
+msgid "Статус:"
+msgstr ""
+
+#: .\templates\orders\order_recieved_email.html:5
+msgid "ВАШ ЗАКАЗ ПОЛУЧЕН"
+msgstr ""
+
+#: .\templates\orders\order_recieved_email.html:7
+msgid "Номер заказа:"
+msgstr ""
+
+#: .\templates\orders\payments.html:8 .\templates\orders\payments.html:123
+msgid "Просмотрите Ваш заказ и произведите оплату"
+msgstr ""
+
+#: .\templates\orders\payments.html:12 .\templates\store\checkout.html:16
+msgid "Платежный адрес"
+msgstr ""
+
+#: .\templates\orders\payments.html:21
+msgid "Примечание к заказу:"
+msgstr ""
+
+#: .\templates\orders\payments.html:33
+msgid "Обзор продуктов"
+msgstr ""
+
+#: .\templates\orders\payments.html:38 .\templates\store\cart.html:24
+#: .\templates\store\checkout.html:80
+msgid "Продукт"
+msgstr ""
+
+#: .\templates\orders\payments.html:39 .\templates\store\cart.html:25
+#: .\templates\store\checkout.html:81
+msgid "Количество"
+msgstr ""
+
+#: .\templates\orders\payments.html:40 .\templates\store\cart.html:26
+#: .\templates\store\checkout.html:82
+msgid "Цена"
+msgstr ""
+
+#: .\templates\orders\payments.html:72
+msgid "сум каждый"
+msgstr ""
+
+#: .\templates\orders\payments.html:91 .\templates\orders\payments.html:130
+#: .\templates\store\cart.html:91
+msgid "Итоговая цена:"
+msgstr ""
+
+#: .\templates\orders\payments.html:109
+msgid "Оплата через Payme"
+msgstr ""
+
+#: .\templates\store\cart.html:12
+msgid "Ваша корзина для покупок пуста"
+msgstr ""
+
+#: .\templates\store\cart.html:15 .\templates\store\checkout.html:123
+msgid "Продолжыть покупать"
+msgstr ""
+
+#: .\templates\store\cart.html:72 .\templates\store\checkout.html:112
+msgid "Сум каждый"
+msgstr ""
+
+#: .\templates\store\cart.html:106
+msgid "Проверка"
+msgstr ""
+
+#: .\templates\store\cart.html:107
+msgid "Продолжайте ходить по магазинам"
+msgstr ""
+
+#: .\templates\store\checkout.html:31
+msgid "Email"
+msgstr ""
+
+#: .\templates\store\checkout.html:41
+msgid "Адресная строка"
+msgstr ""
+
+#: .\templates\store\checkout.html:45
+msgid "Дополнительный адрес"
+msgstr ""
+
+#: .\templates\store\checkout.html:55
+msgid "Район"
+msgstr ""
+
+#: .\templates\store\checkout.html:64
+msgid "Примечание к заказу"
+msgstr ""
+
+#: .\templates\store\checkout.html:122
+msgid "Разместить заказ"
+msgstr ""
+
+#: .\templates\store\product_detail.html:42
+#: .\templates\store\product_detail.html:147
+msgid "Отзывы"
+msgstr ""
+
+#: .\templates\store\product_detail.html:57
+msgid "Выберите цвет"
+msgstr ""
+
+#: .\templates\store\product_detail.html:59
+#: .\templates\store\product_detail.html:70
+msgid "Выбрать"
+msgstr ""
+
+#: .\templates\store\product_detail.html:68
+msgid "Выберите размер"
+msgstr ""
+
+#: .\templates\store\product_detail.html:79
+msgid "Нет в наличии"
+msgstr ""
+
+#: .\templates\store\product_detail.html:81
+msgid "Добавить в корзину"
+msgstr ""
+
+#: .\templates\store\product_detail.html:99
+msgid "Напишите свой отзыв"
+msgstr ""
+
+#: .\templates\store\product_detail.html:103
+msgid "Как вы оцениваете этот продукт?"
+msgstr ""
+
+#: .\templates\store\product_detail.html:118
+msgid "Название рецензии:"
+msgstr ""
+
+#: .\templates\store\product_detail.html:121
+msgid "Отзыв:"
+msgstr ""
+
+#: .\templates\store\product_detail.html:128
+msgid "Вы должны приобрести этот продукт, чтобы оставить отзыв.:"
+msgstr ""
+
+#: .\templates\store\product_detail.html:131
+msgid "You must be logged in to post a review. "
+msgstr ""
+
+#: .\templates\store\product_detail.html:131
+msgid "Войдите в систему"
+msgstr ""
+
+#: .\templates\store\store.html:9
+msgid "Результат поиска"
+msgstr ""
+
+#: .\templates\store\store.html:11
+msgid "Наш магазин"
+msgstr ""
+
+#: .\templates\store\store.html:30
+msgid "Категории"
+msgstr ""
+
+#: .\templates\store\store.html:37
+msgid "Все продукты"
+msgstr ""
+
+#: .\templates\store\store.html:50
+msgid "Размеры"
+msgstr ""
+
+#: .\templates\store\store.html:57 .\templates\store\store.html:62
+msgid "Маленький"
+msgstr ""
+
+#: .\templates\store\store.html:67
+msgid "Большой"
+msgstr ""
+
+#: .\templates\store\store.html:82
+msgid "Диапазон цен"
+msgstr ""
+
+#: .\templates\store\store.html:90
+msgid "Минимум"
+msgstr ""
+
+#: .\templates\store\store.html:103
+msgid "Максимум"
+msgstr ""
+
+#: .\templates\store\store.html:115
+msgid "Применить"
+msgstr ""
+
+#: .\templates\store\store.html:127
+msgid "Найденные предметы"
+msgstr ""
+
+#: .\templates\store\store.html:149
+msgid "Просмотр подробной инфо"
+msgstr ""
+
+#: .\templates\store\store.html:156
+msgid "Результат не найден. Пожалуйста, попробуйте снова."
+msgstr ""
+
+#: .\templates\store\store.html:166 .\templates\store\store.html:168
+msgid "Предыдущий"
+msgstr ""
+
+#: .\templates\store\store.html:180 .\templates\store\store.html:182
+msgid "Следующий"
+msgstr ""

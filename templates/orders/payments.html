@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <section class="section-content padding-y bg">
     <div class="container">
         <!-- ============================ COMPONENT 1 ================================= -->
-        <h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
+        <h4 class="text-center mb-20">{% trans 'Просмотрите Ваш заказ и произведите оплату' %}</h4>
         <div class="row">
             <aside class="col-lg-8">
                 <div class="card">
-                    <h5 class="card-header">Billing Address</h5>
+                    <h5 class="card-header">{% trans 'Платежный адрес' %}</h5>
                     <div class="card-body">
                         <p class="card-text mb-0">{{order.full_name}}</p>
                         <p class="card-text mb-0">{{order.full_address}}</p>
@@ -17,26 +18,26 @@
                         <p class="card-text mb-0">{{order.email}}</p>
                         <p class="card-text mb-0">{{order.phone}}</p>
                         {% if order.order_note %}
-                        <b>Order Note: </b> {{order.order_note}}
+                        <b>{% trans 'Примечание к заказу:' %} </b> {{order.order_note}}
                         {% endif %}
                     </div>
                 </div>
                 <div class="card">
-                    <h5 class="card-header">Payment Method</h5>
+                    <h5 class="card-header"></h5>
                     <div class="card-body">
                         <p class="card-text">Payme</p>
 
                     </div>
                 </div>
                 <div class="card">
-                    <h5 class="card-header">Review Products</h5>
+                    <h5 class="card-header">{% trans 'Обзор продуктов' %}</h5>
                     <div class="card-body">
                         <table class="table table-borderless table-shopping-cart">
                             <thead class="text-muted">
                             <tr class="small text-uppercase">
-                                <th scope="col">Product</th>
-                                <th scope="col" width="120">Quantity</th>
-                                <th scope="col" width="120">Price</th>
+                                <th scope="col">{% trans 'Продукт' %}</th>
+                                <th scope="col" width="120">{% trans 'Количество' %}</th>
+                                <th scope="col" width="120">{% trans 'Цена' %}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,8 +68,8 @@
                                 </td>
                                 <td>
                                     <div class="price-wrap">
-                                        <var class="price">{{ cart_item.sub_total }} sum </var>
-                                        <small class="text-muted">{{ cart_item.product.price }} sum each </small>
+                                        <var class="price">{{ cart_item.sub_total }} Сум </var>
+                                        <small class="text-muted">{{ cart_item.product.price }} {% trans 'сум каждый' %}</small>
                                     </div> <!-- price-wrap .// -->
                                 </td>
 
@@ -87,16 +88,16 @@
                 <div class="card">
                     <div class="card-body">
                         <dl class="dlist-align">
-                            <dt>Total price:</dt>
-                            <dd class="text-right"> {{total}} sum</dd>
+                            <dt>{% trans 'Итоговая цена:' %}</dt>
+                            <dd class="text-right"> {{total}} Сум</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Tax:</dt>
-                            <dd class="text-right">{{tax}} sum</dd>
+                            <dt>{% trans 'Налог:' %}</dt>
+                            <dd class="text-right">{{tax}} Сум</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Grand Total:</dt>
-                            <dd class="text-right text-dark b"><strong>{{amount}} sum</strong></dd>
+                            <dt>{% trans 'Общая сумма:' %}</dt>
+                            <dd class="text-right text-dark b"><strong>{{amount}} Сум</strong></dd>
                         </dl>
                         <hr>
                         <form action="{% url 'send_check' %}" method="get">
@@ -105,7 +106,7 @@
                             <input name="amount" type="hidden" value="{{ amount }}">
 
                             <!-- Кнопка для отправки формы -->
-                            <button type="submit">Отправить чек через Payme</button>
+                            <button type="submit">{% trans 'Оплата через Payme' %}</button>
                         </form>
 
                     </div> <!-- card-body.// -->
@@ -119,23 +120,23 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 <section class="section-content padding-y bg">
     <div class="container">
-        <h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
+        <h4 class="text-center mb-20">{% trans 'Просмотрите Ваш заказ и произведите оплату' %}</h4>
         <div class="row">
             <!-- Order and Payment Details Here -->
             <aside class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <dl class="dlist-align">
-                            <dt>Total price:</dt>
-                            <dd class="text-right">{{ total }} sum</dd>
+                            <dt>{% trans 'Итоговая цена:' %}</dt>
+                            <dd class="text-right">{{ total }} Сум</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Tax:</dt>
-                            <dd class="text-right">{{ tax }}sum</dd>
+                            <dt>{% trans 'Налог:' %}</dt>
+                            <dd class="text-right">{{ tax }}Сум</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Grand Total:</dt>
-                            <dd class="text-right text-dark b"><strong>{{ grand_total }} sum</strong></dd>
+                            <dt>{% trans 'Общая сумма:' %}</dt>
+                            <dd class="text-right text-dark b"><strong>{{amount}} Сум</strong></dd>
                         </dl>
                         <hr>
                     </div>

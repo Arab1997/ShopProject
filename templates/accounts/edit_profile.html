@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 
 <section class="section-conten padding-y bg">
@@ -12,7 +12,7 @@
 	<main class="col-md-9">
 		<article class="card">
 		<header class="card-header">
-			<strong class="d-inline-block mr-3">Edit your profile</strong>
+			<strong class="d-inline-block mr-3">{% trans 'Отредактируйте свой профиль' %}</strong>
 
 		</header>
 		<div class="card-body">
@@ -32,43 +32,43 @@
 					{% csrf_token %}
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>First Name</label>
+							<label>{% trans 'Имя' %} </label>
 							{{user_form.first_name}}
 						</div>
 						<div class="form-group col-md-6">
-							<label>Last Name</label>
+							<label>{% trans 'Фамилия' %}</label>
 							{{user_form.last_name}}
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label>Phone Number</label>
+							<label>{% trans 'Номер телефона' %}</label>
 							{{user_form.phone_number}}
 						</div>
 						<div class="form-group col-md-6">
-							<label>Profile Picture</label>
+							<label>{% trans 'Фотография профиля' %}</label>
 							{{profile_form.profile_picture}}
 						</div>
 					</div>
 					<div class="form-group">
-						<label>Address Line 1</label>
+						<label>{% trans 'адресная строка 1' %}</label>
 						{{profile_form.address_line_1}}
 					</div>
 					<div class="form-group">
-						<label>Address Line 2</label>
+						<label>{% trans 'Адресная строка 2' %}</label>
 						{{profile_form.address_line_2}}
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-4">
-							<label>City</label>
+							<label>{% trans 'Город' %}</label>
 							{{profile_form.city}}
 						</div>
 						<div class="form-group col-md-4">
-							<label>State</label>
+							<label>{% trans 'Государство' %}</label>
 							{{profile_form.state}}
 						</div>
 						<div class="form-group col-md-4">
-							<label>Country</label>
+							<label>{% trans 'Страна' %}</label>
 							{{profile_form.country}}
 						</div>
 					</div>

@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 class Category(models.Model):
@@ -9,9 +9,14 @@ class Category(models.Model):
     description = models.TextField(max_length=255, blank=True)
     cat_image = models.ImageField(upload_to='photos/categories', blank=True)
 
+    # class Meta:
+    #     verbose_name = 'Категория'
+    #     verbose_name_plural = 'Категории'
+
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+        verbose_name = _('Категория')
+        verbose_name_plural = _('Категории')
+
 
     def get_url(self):
             return reverse('products_by_category', args=[self.slug])
